@@ -1,0 +1,90 @@
+/*
+===================== Admin panel code start =====================
+ */
+
+:root {
+  --offcanvas-width: 270px;
+  --topNavbarHeight: 56px;
+  --primary_color: #000000;
+  --secondary_color: #ff0000;
+  --other_color: #ffffff;
+  --shadow:0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.a-disabled{
+  text-decoration: none;
+  color: #000000;
+  :hover{
+    color: #000000;
+  }
+}
+
+.sidebar-nav {
+  width: var(--offcanvas-width);
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+}
+.sidebar-link .right-icon {
+  display: inline-flex;
+}
+.sidebar-link[aria-expanded="true"] .right-icon {
+  transform: rotate(180deg);
+}
+
+@media (min-width: 992px) {
+  body {
+    overflow: auto !important;
+  }
+  main {
+    margin-left: var(--offcanvas-width);
+  }
+  /* this is to remove the backdrop */
+  .offcanvas-backdrop::before {
+    display: none;
+  }
+  .sidebar-nav {
+    -webkit-transform: none;
+    transform: none;
+    visibility: visible !important;
+    height: calc(100% - var(--topNavbarHeight));
+    top: var(--topNavbarHeight);
+  }
+}
+.offcanvas{
+  color: white;
+}
+
+
+.navbar-dark .navbar-nav .nav-link {
+  color: white;
+} 
+
+/*
+===================== Admin panel code end =====================
+ */
+
+ /*
+===================== index page code start =====================
+ */
+.dashboard-box{
+  box-shadow: var(--shadow);
+ 
+  border-left: 5px solid var(--secondary_color);
+  .icon{
+    font-size: 40px;
+    
+  }
+  .number{
+    font-size: 30px;
+  }
+}
+
+
+ /*
+===================== index page code end =====================
+ */
+
+

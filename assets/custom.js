@@ -102,8 +102,8 @@ $(document).ready(function () {
 
 /*----------------------------------Add to cart jquery start----------------------------------*/
   $(document).ready(function () {
-    var taxRate = 0.05;
-    var shippingRate = 15.0;
+    var taxRate = 0.13;
+    var shippingRate = 200;
     var fadeTime = 300;
 
     /* Assign actions */

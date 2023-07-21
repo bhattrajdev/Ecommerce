@@ -60,6 +60,10 @@ if (!empty($_POST)) {
         $errors['category'] = "Category field is required";
     }
 
+
+    $errors['discount'] = '';
+
+
     if (!array_filter($errors)) {
         // getting values
         $name = $_POST['name'];
@@ -69,10 +73,14 @@ if (!empty($_POST)) {
         $price = $_POST['price'];
         $description = $_POST['description'];
         $quantity = $_POST['quantity'];
-        $discount = '';
+        $discount = $_POST['discount'];
         $color = $_POST['color'];
         $size = $_POST['size'];
         $images = '';
+
+        if ($discount > 0) {
+            $price = $price - ($price * $discount) / 100;
+        }
 
         // inserting into products table
         $productdata = [
@@ -87,30 +95,19 @@ if (!empty($_POST)) {
         ];
         $lastinsertedid = insert('product', $productdata);
 
-        // inserting color and size in product variation
-        // $colorCount = count($color);
-        // $sizeCount = count($size);
-        // $maxCount = max($colorCount, $sizeCount);
-        // for ($i = 0; $i < $maxCount; $i++) {
-        //     $productvariation = [
-        //         'product_id' => $lastinsertedid,
-        //         'color_id' => isset($color[$i]) ? $color[$i] : null,
-        //         'size_id' => isset($size[$i]) ? $size[$i] : null,
-        //     ];
-        //     insert('productvariation', $productvariation);
-        // }
-            foreach($color as $clr){
-                foreach($size as $s){
-                $productvariation = [
-                'product_id' => $lastinsertedid,
-                'color_id' => $clr,
-                'size_id' => $s,
-            ];
-            insert('productvariation', $productvariation);
-                }
-            }
 
-        
+        foreach ($color as $clr) {
+            foreach ($size as $s) {
+                $productvariation = [
+                    'product_id' => $lastinsertedid,
+                    'color_id' => $clr,
+                    'size_id' => $s,
+                ];
+                insert('productvariation', $productvariation);
+            }
+        }
+
+
         // uploading multiple images in the database
         if (!empty($_FILES['images']['name'])) {
             $uploadedImages = [];
@@ -122,11 +119,8 @@ if (!empty($_POST)) {
                 $destinationPath = public_path('products/images/') . $imageName;
                 $imagepath = 'products/images/' . $imageName;
 
-                if (!move_uploaded_file($tmpName, $destinationPath)) {
-                    die('File upload failed');
-                } else {
-                    $uploadedImages[] = $imagepath;
-                }
+                move_uploaded_file($tmpName, $destinationPath);
+                $uploadedImages[] = $imagepath;
             }
 
             $productgallery = [
@@ -149,7 +143,6 @@ if (!empty($_POST)) {
         echo "failed";
     }
 }
-
 
 ?>
 
@@ -216,6 +209,7 @@ if (!empty($_POST)) {
                 <div class="form-group mt-4">
                     <label for="discount" class="form-label">Discount: </label>
                     <input type="number" name="discount" id="discount" value="<?= $oldvalues['discount'] ?>" class="form-control">
+
                 </div>
                 <!-- for color -->
                 <div class="form-group mt-4">

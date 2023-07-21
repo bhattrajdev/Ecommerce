@@ -108,7 +108,10 @@ $orderClause"
                         <p class="desc"><?= $data['product_name']; ?></p>
                         <div class="price_discount">
                             <div class="price">RS <?= $data['product_price']; ?></div>
-                            <div class="discount"><?= $data['product_discount']; ?>% off</div>
+                            <div class="discount">
+                                <?php if ($data['product_discount'] > 0) { ?>
+                                    <?= $data['product_discount']; ?>% off</div>
+                        <?php } ?>
                         </div>
                     </a>
                 </div>

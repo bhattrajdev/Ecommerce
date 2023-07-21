@@ -49,7 +49,7 @@ JOIN productvariation ON product.product_id = productvariation.product_id
 JOIN productgallery ON product.product_id = productgallery.product_id
 WHERE $whereClause
 GROUP BY product.product_id
-$orderClause"
+$orderClause ORDER BY product.product_id DESC"
 );
 
 
@@ -83,7 +83,7 @@ $orderClause"
                 <div class="filter_options">
                     <span>Price:</span>
                     <select name="price">
-                        <option value="" selected >Choose</option>
+                        <option value="" selected>Choose</option>
                         <option value="lowtohigh" <?= ($oldvalue['price'] == "lowtohigh" ? 'selected' : '') ?>>low to high</option>
                         <option value="hightolow" <?= ($oldvalue['price'] == "hightolow" ? 'selected' : '') ?>>high to low</option>
                     </select>
@@ -108,8 +108,13 @@ $orderClause"
                         <p class="desc"><?= $data['product_name']; ?></p>
                         <div class="price_discount">
                             <div class="price">RS <?= $data['product_price']; ?></div>
-                            <div class="discount"><?= $data['product_discount']; ?>% off</div>
+                            <div class="discount">
+                                <?php if ($data['product_discount'] > 0) { ?>
+                                    <?= $data['product_discount']; ?>% off
+                        <?php } ?>
                         </div>
+                        </div>
+                
                     </a>
                 </div>
             <?php }

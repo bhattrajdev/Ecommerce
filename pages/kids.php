@@ -49,7 +49,7 @@ JOIN productvariation ON product.product_id = productvariation.product_id
 JOIN productgallery ON product.product_id = productgallery.product_id
 WHERE $whereClause
 GROUP BY product.product_id
-$orderClause"
+$orderClause ORDER BY product.product_id DESC"
 );
 
 
@@ -108,15 +108,19 @@ $orderClause"
                         <p class="desc"><?= $data['product_name']; ?></p>
                         <div class="price_discount">
                             <div class="price">RS <?= $data['product_price']; ?></div>
-                            <div class="discount"><?= $data['product_discount']; ?>% off</div>
+                            <div class="discount">
+                                <?php if ($data['product_discount'] > 0) { ?>
+                                    <?= $data['product_discount']; ?>% off</div>
+                        <?php } ?>
                         </div>
-                    </a>
                 </div>
-            <?php }
+                </a>
+    </div>
+<?php }
         } else { ?>
 
-            <h2 class="no_data_found">No Data Found</h2>
-        <?php } ?>
-    </div>
-    </div>
+<h2 class="no_data_found">No Data Found</h2>
+<?php } ?>
+</div>
+</div>
 </section>

@@ -53,13 +53,6 @@ CREATE TABLE brand(
 INSERT INTO brand (name)
 VALUES ('Nike'), ('Adidas'), ('Puma'), ('Reebok'), ('New Balance'), ('Vans'), ('Converse'), ('Under Armour'), ('Skechers'), ('ASICS'), ('Fila'), ('Salomon'), ('Merrell'), ('Brooks'), ('Lacoste'), ('Timberland'), ('Dr. Martens'), ('Mizuno'), ('Hoka One One'), ('Columbia');
 
--- for product gallery
-CREATE TABLE productgallery(
-    productgallery_id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    name varchar(255),
-    product_id int,
-    FOREIGN KEY (product_id) REFERENCES product(id)
-    );
 
 -- for product table
 CREATE TABLE product (
@@ -75,6 +68,7 @@ CREATE TABLE product (
     discount int,
    	description varchar(255)
     );
+
 
 -- for product variation
 CREATE TABLE productvariation (
@@ -101,20 +95,30 @@ CREATE TABLE productgallery(
 CREATE TABLE admin (
     admin_id int AUTO_INCREMENT NOT NULL PRIMARY KEY,
     email varchar(100),
-    password varchar(100),
+    password varchar(100)
     );
 
 -- admin query
 INSERT INTO admin (email,password)VALUES('devrajbhatt010@gmail.com',MD5('123'));
 
 -- creating cart 
-CREATE TABLE cart(
-    cart_id int PRIMARY KEY  AUTO_INCREMENT NOT NULL,
+-- CREATE TABLE cart(
+--     cart_id int PRIMARY KEY  AUTO_INCREMENT NOT NULL,
+--     user_id int,
+--     FOREIGN KEY (user_id) REFERENCES users(users_id),
+--      product_id int,
+--     FOREIGN KEY (product_id) REFERENCES product(product_id),
+--   	productvariation_id int,
+--     FOREIGN KEY (productvariation_id) REFERENCES productvariation(productvariation_id),
+--     quantity int
+--     );
+
+-- creating address table
+CREATE TABLE address(
+    address_id int PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id int,
     FOREIGN KEY (user_id) REFERENCES users(users_id),
-     product_id int,
-    FOREIGN KEY (product_id) REFERENCES product(product_id),
-  	productvariation_id int,
-    FOREIGN KEY (productvariation_id) REFERENCES productvariation(productvariation_id),
-    quantity int
+    address varchar(255),
+    email varchar(100),
+    phone varchar(100)
     );

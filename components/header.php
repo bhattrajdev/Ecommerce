@@ -42,6 +42,7 @@
                             <i class="fas fa-user" style="color: #ffffff;"></i>
                         </button>
                         <div id="dropdown-content" class="dropdown-content" onmouseover="showDropdown()" onmouseout="hideDropdown()">
+                            <a href="#">History</a>
                             <a href="<?= url('logout.php') ?>">Logout</a>
                         </div>
                     </div>

@@ -462,6 +462,7 @@ nav {
 
 .btn:hover {
   box-shadow: 2px 2px 5px #BBA5A0;
+  border:1px solid var(--secondary_color) ;
 }
 
 .already-text {
@@ -705,7 +706,7 @@ ul {
 #product-detail .btn-groups {
   margin-top: 30px;
   display: flex;
-    gap: 20px;
+  gap: 20px;
 }
 
 #product-detail .btn-groups button {
@@ -728,9 +729,9 @@ ul {
   border: 2px solid var(--secondary_color);
 }
 
-#product-detail .btn-groups  .add-cart-btn:hover {
-background-color: var(--other_color);
-color: var(--secondary_color);
+#product-detail .btn-groups .add-cart-btn:hover {
+  background-color: var(--other_color);
+  color: var(--secondary_color);
 }
 
 #product-detail .buy-now-btn {
@@ -881,6 +882,7 @@ color: var(--secondary_color);
   text-align: center;
   /* box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25); */
 }
+
 #pages .products .item:hover {
   box-shadow: 10px 20px 40px -10px rgba(0, 0, 0, 0.25);
 }
@@ -1152,9 +1154,14 @@ color: var(--secondary_color);
 
 
 /*---------------------------------- Cart Page Start --------------------*/
+#cart {
+  min-height: 80vh;
+  overflow: auto;
+}
 #cart h1 {
   font-weight: 100;
 }
+
 
 #cart .shopping-cart {
   background-color: #ffffff;
@@ -1270,6 +1277,7 @@ color: var(--secondary_color);
   float: right;
   border: none;
   margin-top: 20px;
+  margin-bottom: 20px;
   padding: 10px 20px;
   font-size: 16px;
   background-color: #f44336;

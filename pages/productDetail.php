@@ -1,20 +1,20 @@
 <?php
 $product_id = $_GET['id'];
 
-
-
-
-// add to cart and buy now
-
+// Add to cart and buy now
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!isset($_SESSION['name']) && !isset($_SESSION['email']) && !isset($_SESSION['users_id'])) {
-        header('location:login.php');
+    if (!isset($_SESSION['name']) || !isset($_SESSION['email']) || !isset($_SESSION['users_id'])) {
+        header('Location: login.php');
         exit();
     }
+
     $user_id = $_SESSION['users_id'];
     $quantity = $_POST['quantity'];
     $size = $_POST['size'];
     $color = $_POST['color'];
+    $productname = $_POST['productname'];
+    $productprice = $_POST['productprice'];
+    $productimage = $_POST['singleimage'];
 
     if (!empty($size) && !empty($color)) {
         if (isset($_POST['add_to_cart'])) {
@@ -22,19 +22,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if (!empty($data)) {
                 $productvariation_id = $data[0]['productvariation_id'];
-                $cartData = [
-                    'user_id' => $user_id,
-                    'product_id' => $product_id,
-                    'productvariation_id' => $productvariation_id,
-                    'quantity' => $quantity
-                ];
 
-                insert('cart', $cartData);
-                $_SESSION['message'] = [
-                    'title' => 'Success',
-                    'message' => 'Product Successfully Added To Cart',
-                    'type' => 'success'
-                ];
+                // Check if the item already exists in the cart
+                $itemExists = false;
+                $cartItems = $_SESSION['cartdata'];
+
+                foreach ($cartItems as $cart) {
+                    if ($cart['user_id'] == $user_id && $cart['product_id'] == $product_id && $cart['productvariation_id'] == $productvariation_id) {
+                        $itemExists = true;
+                        break;
+                    }
+                }
+
+                if ($itemExists) {
+                    // Give an error message if the product already exists in the cart
+                    $_SESSION['message'] = [
+                        'title' => 'Error',
+                        'message' => 'The product already exists in the cart with the same size and color.',
+                        'type' => 'error'
+                    ];
+                } else {
+                    $cartData = [
+                        'user_id' => $user_id,
+                        'product_id' => $product_id,
+                        'productvariation_id' => $productvariation_id,
+                        'quantity' => $quantity,
+                        'product_image' => $productimage,
+                        'product_name' => $productname,
+                        'product_price' => $productprice,
+                    ];
+
+                    // store the data in session
+                    $_SESSION['cartdata'][] = $cartData;
+                    $_SESSION['message'] = [
+                        'title' => 'Success',
+                        'message' => 'Product successfully added to the cart.',
+                        'type' => 'success'
+                    ];
+                }
             } else {
                 $_SESSION['message'] = [
                     'title' => 'Error',
@@ -43,12 +68,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ];
             }
         } elseif (isset($_POST['buy_now'])) {
-            echo "hello world, this is buy now";
+            // Handle buy now functionality
+            echo "Hello world, this is buy now.";
         }
     } else {
         $_SESSION['message'] = [
             'title' => 'Error',
-            'message' => 'Please select the desired size and color',
+            'message' => 'Please select the desired size and color.',
             'type' => 'error'
         ];
     }
@@ -91,9 +117,12 @@ $element = select(
 // accessing the 0th element of the array
 $data = $element[0];
 
+
+
 // separating images
 $image = $data['images'];
 $images = explode(',', $image);
+
 
 // separating colors
 $color = $data['colors'];
@@ -128,6 +157,11 @@ foreach ($sizeArray as $sizeItem) {
     ];
 }
 
+
+
+
+
+
 ?>
 
 
@@ -157,6 +191,9 @@ foreach ($sizeArray as $sizeItem) {
                         <span class="product-price"><?= $data['product_price'] ?></span>
                         <p class="product-description"><?= $data['product_description'] ?></p>
                         <form method="POST" action="">
+                            <input type="hidden" name="singleimage" value="<?= $images[0] ?>">
+                            <input type="hidden" name="productname" value="<?= $data['product_name'] ?>">
+                            <input type="hidden" name="productprice" value="<?= $data['product_price'] ?>">
                             <div class="options">
                                 <div>
                                     <span>Quantity:</span>

@@ -1,5 +1,6 @@
       <?php
 // getting products
+$productCount = 0;
       $data = select('product_id','product');
       foreach($data as $key =>$d){
 

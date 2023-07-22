@@ -1,38 +1,47 @@
-functional requirents
+# SneakersStation Project
 
--------------------- User/Seller --------------------
+Welcome to SneakersStation, a web application for sneaker enthusiasts to explore and purchase their favorite sneakers.
 
-- should allow users to register for an account and authenticate themselves securely to access the platform's features. --done
-- should provide a search functionality that allows users to search for specific products by name, brand, or category.
-- should provide a catalog of available products, including detailed information about each item, such as price, size, color, and condition (new or used). --done
-- should provide a shopping cart functionality that allows users to add items to their cart and complete their purchase at checkout. --done
-- should integrate with a payment gateway to allow users to securely pay for their purchases using their preferred payment method.
-- gets notification for delivery status
-- should be able to sell products to the admin.
-- gets notification for uploaded product
+## Project Description
+
+SneakersStation is a web application that allows users to browse, search, and purchase sneakers.
+The application is divided into frontend and backend sections, catering to both user-facing functionalities and administrative tasks.
+
+## Directory Structure
+
+The project directory is organized as follows:
+
+- `assets/`: Contains custom styles and JavaScript files for the frontend.
+- `component/`: Holds reusable components like dynamic header and footer for the frontend.
+- `helper/`: Contains utility functions for CRUD operations and other helpful tasks.
+- `pages/`: Includes the main pages of the frontend application.
+- `public/`: Contains public data, such as images and videos.
+
+Backend Directory:
+
+- `ss-admin/`: Backend section dedicated to administrative tasks.
+  - `assets/`: Backend-specific assets.
+  - `components/`: Backend dynamic components.
+  - `helper/`: Backend utility functions, e.g., authentication, validation.
+  - `layout/`: Backend layouts, like the admin panel layout.
+  - `pages/`: Backend pages, such as dashboard and user management.
+  - `htaccess`: Apache .htaccess file for URL rewriting.
+  - `index.php`: Main backend entry point.
+
+## Getting Started
+
+To get started with SneakersStation, follow these steps:
+
+1. Clone the repository.
+2. Set up a local web server with PHP and MySQL.
+3. Create a database and import the provided `db.sql` file to set up the database structure.
+4. Adjust database credentials in `config.php` inside the `helper/` folder.
+5. Start the frontend by navigating to the `pages/` folder on your web server.
+6. Access the backend by navigating to the `ss-admin/` folder.
+
+## Contributing
+
+We welcome contributions to improve SneakersStation! Please fork this repository and submit pull requests.
 
 
-
-
-
-
-
-
-
-Admin
-
-- Admin login validation --done
-- Should be able to add and manage products --done
-- should be able to give discount on products
-- Should be able to add brand,category, color and sizes --done
-- should be able to manage inventory of the products
-- should be able to view order history
-- gets notification when a user uploads a new product to sell
-- approves/ rejects the products uploaded by the seller
-- update product delivery status
-
-
-
-
-
-
+Enjoy exploring the world of sneakers with SneakersStation!

@@ -3,13 +3,14 @@ CREATE DATABASE SneakerStation;
 
 -- For creating users
 CREATE TABLE Users(
-    users_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    name varchar(200),
-    email varchar(100),
-    password varchar(200),
-    verification_code int,
-    is_verified ENUM('0','1') DEFAULT '0'
+    users_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(200),
+    email VARCHAR(100),
+    password VARCHAR(200),
+    verification_code INT,
+    is_verified ENUM('0', '1') DEFAULT '0'
 );
+
 
 -- for creating color 
 CREATE TABLE color(
@@ -101,17 +102,7 @@ CREATE TABLE admin (
 -- admin query
 INSERT INTO admin (email,password)VALUES('devrajbhatt010@gmail.com',MD5('123'));
 
--- creating cart 
--- CREATE TABLE cart(
---     cart_id int PRIMARY KEY  AUTO_INCREMENT NOT NULL,
---     user_id int,
---     FOREIGN KEY (user_id) REFERENCES users(users_id),
---      product_id int,
---     FOREIGN KEY (product_id) REFERENCES product(product_id),
---   	productvariation_id int,
---     FOREIGN KEY (productvariation_id) REFERENCES productvariation(productvariation_id),
---     quantity int
---     );
+
 
 -- creating address table
 CREATE TABLE address(
@@ -130,7 +121,8 @@ CREATE TABLE orders (
     FOREIGN KEY (user_id) REFERENCES users(users_id),
     address_id INT,
     FOREIGN KEY (address_id) REFERENCES address(address_id),
-    purchase_date VARCHAR(100),
+    order_date VARCHAR(100),
+    total varchar(100),
     payment_method VARCHAR(100),
     is_accepted ENUM('0', '1') DEFAULT NULL,
     is_paid ENUM('0', '1') DEFAULT '0',
@@ -138,17 +130,15 @@ CREATE TABLE orders (
     delivery_date VARCHAR(100)
 );
 
-ALTER TABLE orders
-ADD total varchar(100);
 
 -- ordered product table
 CREATE TABLE orderproducts(
     ordersproducts_id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
     order_id int,
+    quantity int,
     FOREIGN KEY (order_id) REFERENCES orders(order_id),
     product_id int,
     FOREIGN KEY (product_id) REFERENCES product(product_id),
     productvariation_id int,
     FOREIGN KEY (productvariation_id) REFERENCES productvariation(productvariation_id)
 );
-ALTER TABLE `orderproducts` ADD `quantity` INT NOT NULL AFTER `productvariation_id`;

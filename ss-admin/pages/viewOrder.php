@@ -71,7 +71,7 @@ Best regards,<br>
 The SneakerStation Team";
 
 
-        phpmailer($email, $message, "Order Placed Successfully");
+        // phpmailer($email, $message, "Order Placed Successfully");
         header('Location:newOrders.php');
     }
     // handle reject 

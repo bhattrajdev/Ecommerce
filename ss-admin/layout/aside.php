@@ -153,7 +153,7 @@
                       <div class="collapse" id="manageorder">
                           <ul class="navbar-nav ps-3">
                               <li>
-                                  <a href="<?= url('ss-admin/oldOrders.php') ?>" class="nav-link px-3">
+                                  <a href="<?= url('ss-admin/orderProgress.php') ?>" class="nav-link px-3">
                                       <span class="me-2"><i class="fa-brands fa-think-peaks" style="color: #ffffff;"></i></span>
                                       <span>Order Progress</span>
                                   </a>

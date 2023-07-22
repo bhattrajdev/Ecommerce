@@ -45,7 +45,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ];
             insert('Users', $data);
             $_SESSION['registered'] = true;
-            phpmailer($email, $randomNumber);
+            $body =
+                'Dear Customer,
+                Thank you for choosing SneakerStation. To ensure the security of your account, we require you to verify your email address.
+                Please use the following verification code to complete the verification process:
+                <br><br>
+                <b>Verification Code: ' . $randomNumber . '</b>
+                <br><br>
+            Thank you for your cooperation.
+            <br><br>
+            Best regards,
+            <br><br>
+            The SneakerStation Team';
+
+
+
+            phpmailer($email, $body,"Verification Code");
             header('Location:register_validation.php');
         }
     }

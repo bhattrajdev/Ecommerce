@@ -23,7 +23,7 @@
                           <i class="bi bi-person-fill"></i>
                       </a>
                       <ul class="dropdown-menu dropdown-menu-end">
-                          <li><a class="dropdown-item" href="<?= url('ss-admin/logout.php')?>">LOGOUT</a></li>
+                          <li><a class="dropdown-item" href="<?= url('ss-admin/logout.php') ?>">LOGOUT</a></li>
                       </ul>
                   </li>
               </ul>
@@ -37,7 +37,7 @@
           <nav class="navbar-dark">
               <ul class="navbar-nav">
                   <li>
-                      <a href="<?= url('ss-admin')?>" class="nav-link px-3 active">
+                      <a href="<?= url('ss-admin') ?>" class="nav-link px-3 active">
                           <span class="me-2"><i class="bi bi-speedometer2"></i></span>
                           <span>Dashboard</span>
                       </a>
@@ -127,14 +127,49 @@
                   </li>
                   <li>
                       <div class="text-muted small fw-bold text-uppercase px-3 mb-3">
-                          lorem
+                          Orders
                       </div>
                   </li>
                   <li>
-                      <a href="#" class="nav-link px-3">
-                          <span class="me-2"><i class="bi bi-layout-split"></i></span>
-                          <span>lorem</span>
+                      <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#manageorder">
+                          <span class="me-2"><i class="fa-solid fa-chart-simple" style="color: #ffffff;"></i></span>
+                          <span>Order Management</span>
+                          <span class="ms-auto">
+                              <span class="right-icon">
+                                  <i class="bi bi-chevron-down"></i>
+                              </span>
+                          </span>
                       </a>
+                      <div class="collapse" id="manageorder">
+                          <ul class="navbar-nav ps-3">
+                              <li>
+                                  <a href="<?= url('ss-admin/newOrders.php') ?>" class="nav-link px-3">
+                                      <span class="me-2"><i class="fa-solid fa-brush" style="color: #ffffff;"></i></span>
+                                      <span>New Orders</span>
+                                  </a>
+                              </li>
+                          </ul>
+                      </div>
+                      <div class="collapse" id="manageorder">
+                          <ul class="navbar-nav ps-3">
+                              <li>
+                                  <a href="<?= url('ss-admin/oldOrders.php') ?>" class="nav-link px-3">
+                                      <span class="me-2"><i class="fa-brands fa-think-peaks" style="color: #ffffff;"></i></span>
+                                      <span>Order Progress</span>
+                                  </a>
+                              </li>
+                          </ul>
+                      </div>
+                      <div class="collapse" id="manageorder">
+                          <ul class="navbar-nav ps-3">
+                              <li>
+                                  <a href="<?= url('ss-admin/oldOrders.php') ?>" class="nav-link px-3">
+                                      <span class="me-2"><i class="fa-brands fa-think-peaks" style="color: #ffffff;"></i></span>
+                                      <span>Old Orders</span>
+                                  </a>
+                              </li>
+                          </ul>
+                      </div>
                   </li>
                   <li>
                       <a href="#" class="nav-link px-3">

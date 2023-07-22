@@ -1,14 +1,23 @@
 <?php
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+
+// Your PHPMailer code here
+
+
+// use PHPMailer\PHPMailer\PHPMailer;
+// use PHPMailer\PHPMailer\SMTP;
+// use PHPMailer\PHPMailer\Exception;
+
+// Your PHPMailer code here
+
 
 ob_start();
 //Load Composer's autoloader
 require 'vendor/autoload.php';
 
-function phpmailer($address,$verification_code){
+function phpmailer($address,$body,$subject = null){
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
 
@@ -33,23 +42,7 @@ try {
     //Content
     $mail->isHTML(true);                                  
     $mail->Subject = 'VERIFICATION CODE';
-    $mail->Body    = 'Dear Customer,
-
-Thank you for choosing SneakerStation. To ensure the security of your account, we require you to verify your email address.
-
-Please use the following verification code to complete the verification process:
-
-<br><br>
-<b>Verification Code:'.$verification_code.'</b>
-<br><br>
-
-Thank you for your cooperation.
-
-<br><br>
-Best regards,
-
-<br><br>
-The SneakerStation Team';
+    $mail->Body    = $body;
     // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
     $mail->send();

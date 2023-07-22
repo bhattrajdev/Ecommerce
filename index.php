@@ -1,4 +1,5 @@
 <?php
+
 require 'helpers/phpmailer.php';
 require 'helpers/config.php';
 require 'helpers/insert.php';

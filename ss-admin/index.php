@@ -1,5 +1,6 @@
 <?php
 ob_start();
+
 require '../helpers/config.php';
 require '../helpers/insert.php';
 require '../helpers/select.php';
@@ -8,6 +9,8 @@ require '../helpers/delete.php';
 require './helpers/insertImages.php';
 require "./layout/header.php";
 require './components/message.php';
+
+
 
 
 if (isset($_SESSION['email']) && isset($_SESSION['is_admin'])) {

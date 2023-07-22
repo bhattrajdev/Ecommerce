@@ -5,8 +5,24 @@ if (!isset($_SESSION['name']) && !isset($_SESSION['email']) && !isset($_SESSION[
 $address = $_SESSION['selected_address_id'];
 $data = select('*', 'address', "WHERE address_id =" . $_SESSION['selected_address_id']);
 $address = $data[0];
-// echo "<pre>";
-// print_r($_SESSION);
+
+if(isset($_POST)){
+    $order_id = $_SESSION['order_id'];
+    if(isset($_POST['cod'])){
+        $data=[
+            'payment_method'=>'cash',
+            'order_date'=> date("Y-m-d"),
+        ];
+        update('orders',$data,"order_id = $order_id");
+        $_SESSION['message'] = [
+            'title' => 'Success',
+            'message' => 'Please wait until your order is verified !!!',
+            'type' => 'success'
+        ];
+        header('Location:index.php');
+
+    }
+}
 ?>
 
 <!-- custom inline css -->
@@ -308,7 +324,7 @@ $address = $data[0];
 
             <div class="button_grp">
                 <form action="#" method="post">
-                    <button class="buttons cod" type="submit">Cash On Delivery</button>
+                    <button class="buttons cod" name="cod" type="submit">Cash On Delivery</button>
                     <button class="buttons esewa" type="submit">E-sewa</button>
                 </form>
             </div>

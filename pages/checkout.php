@@ -111,7 +111,30 @@ if (!isset($_SESSION['name']) && !isset($_SESSION['email']) && !isset($_SESSION[
         // taking the address from the form 
         if (isset($_POST['form-submit'])) {
             if (!empty($_POST['selected_address_id'])) {
-                $_SESSION['selected_address_id'] = $_POST['selected_address_id'];
+                $_SESSION['selected_address_id'] = $_POST['selected_address_id']; 
+                $address = $_SESSION['selected_address_id'];
+                $total = $_SESSION['total'];
+                $data=[
+                    'user_id' => $user_id,
+                    'address_id' => $address,
+                    'total' =>$total
+                ];
+                $last_inserted_id = insert('orders',$data);
+                // getting cart data and inserting it into product order 
+                $cartdata = $_SESSION['cartdata'];
+                foreach ($cartdata as $product) {
+                    $product_id = $product['product_id'];
+                    $productvariation_id = $product['productvariation_id'];
+                    $quantity = $product['quantity'];
+                    $order_product_data = array(
+                        'order_id' => $last_inserted_id,
+                        'product_id' => $product_id,
+                        'productvariation_id' => $productvariation_id,
+                        'quantity'=>$quantity,
+                    );
+                    insert('orderproducts', $order_product_data);
+                }
+                $_SESSION['order_id'] = $last_inserted_id;
                header('Location:paymentoption.php');
             } else {
                 $_SESSION['message'] = [

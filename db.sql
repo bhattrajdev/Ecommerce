@@ -122,3 +122,33 @@ CREATE TABLE address(
     email varchar(100),
     phone varchar(100)
     );
+
+-- creating order table
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(users_id),
+    address_id INT,
+    FOREIGN KEY (address_id) REFERENCES address(address_id),
+    purchase_date VARCHAR(100),
+    payment_method VARCHAR(100),
+    is_accepted ENUM('0', '1') DEFAULT NULL,
+    is_paid ENUM('0', '1') DEFAULT '0',
+    is_delivered ENUM('0', '1') DEFAULT '0',
+    delivery_date VARCHAR(100)
+);
+
+ALTER TABLE orders
+ADD total varchar(100);
+
+-- ordered product table
+CREATE TABLE orderproducts(
+    ordersproducts_id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    order_id int,
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    product_id int,
+    FOREIGN KEY (product_id) REFERENCES product(product_id),
+    productvariation_id int,
+    FOREIGN KEY (productvariation_id) REFERENCES productvariation(productvariation_id)
+);
+ALTER TABLE `orderproducts` ADD `quantity` INT NOT NULL AFTER `productvariation_id`;

@@ -12,9 +12,6 @@ require './components/message.php';
 require '../helpers/phpmailer.php';
 require '../vendor/autoload.php';
 
-
-
-
 if (isset($_SESSION['email']) && isset($_SESSION['is_admin'])) {
 
     $requesturi = isset($_GET['uri']) ? $_GET['uri'] : 'index';

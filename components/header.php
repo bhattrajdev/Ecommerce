@@ -1,29 +1,3 @@
-<?php
-if(!empty($_GET['search'])){
-// // $search= $_GET['search'];
-// $search = $_GET['search'];
-// $searchData = select('DISTINCT p.product_id, p.name AS product_name, b.name AS brand_name,
-//  c.name AS category_name, p.price, pv.color_id, pv.size_id, p.discount', 
-//  'product AS p',
-//         "LEFT JOIN brand AS b ON p.brand_id = b.brand_id
-// LEFT JOIN category AS c ON p.category_id = c.category_id
-// LEFT JOIN productvariation AS pv ON p.product_id = pv.product_id
-// LEFT JOIN color AS col ON pv.color_id = col.color_id
-// LEFT JOIN size AS s ON pv.size_id = s.size_id
-// WHERE 
-//     p.name LIKE '%search%'
-//     OR b.name LIKE '%search%'
-//     OR c.name LIKE '%search%'
-//     OR col.name LIKE '%search%'
-//     OR s.name LIKE '%search%'");
-// }
-// echo "<pre>";   
-// print_r($searchData);
-// die();
-}
-?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -104,10 +78,10 @@ if(!empty($_GET['search'])){
         </div>
     </nav>
     <!-- for search box -->
-    <form action="#">
-    <div class="searchBox">
-        <div class="container">
-                <input type="search" name="search" placeholder="Search Here" />
+    <form action="searchResults.php">
+        <div class="searchBox" style="<?php echo isset($_GET['search']) && !empty($_GET['search']) ? 'display: flex;' : 'display: none;'; ?>">
+            <div class="container">
+                <input type="search" name="search" placeholder="Search Here" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>" />
             </div>
         </div>
     </form>

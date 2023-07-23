@@ -14,20 +14,21 @@
               <div class="footer-col">
                   <h4>Shopping</h4>
                   <ul>
-                      <li><a href="#">Trending</a></li>
-                      <li><a href="#">Fast Seller</a></li>
-                      <li><a href="#">New - In</a></li>
-                      <li><a href="#">Sale</a></li>
+                      <li><a href="<?= url('male.php') ?>">Male</a></li>
+                      <li><a href="<?= url('female.php') ?>">Female</a></li>
+                      <li><a href="<?= url('kids.php') ?>">Kids</a></li>
+                      <li><a href="<?= url('used.php') ?>">Used</a></li>
                   </ul>
               </div>
               <div class="footer-col">
                   <h4>Contact</h4>
-                  <ul>
-                      <li><a href="#">Contact Us</a></li>
-                      <li><a href="#">Payment Method</a></li>
-                      <li><a href="#">Delivery</a></li>
-                      <li><a href="#">Return & Exchange</a></li>
+                  <ul style="color: #efe1e1;;line-height: 3.5vh;">
+                      <li><i class="fa-solid fa-envelope" style="color: #ffffff;"></i>&nbsp; sneakersstaion@gmail.com </li>
+                      <li><i class="fa-solid fa-phone" style="color: #ffffff;"></i>&nbsp; 980000000</li>
+                      <li><i class="fa-solid fa-location-dot" style="color: #ffffff;"></i> &nbsp; Kathmandu, Nepal</li>
+                      <li></li>
                   </ul>
+
               </div>
               <div class="footer-col">
                   <h4>Follow Us</h4>

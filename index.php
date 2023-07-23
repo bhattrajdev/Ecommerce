@@ -24,4 +24,5 @@ if (file_exists($pagepath) && is_file($pagepath)) {
 } else {
     require 'pages/errors/404.php';
 }
+
 require "components/footer.php";

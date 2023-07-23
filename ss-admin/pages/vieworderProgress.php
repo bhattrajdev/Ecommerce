@@ -13,7 +13,9 @@ $output = select(
     orderproducts.quantity AS product_quantity,
     orders.total,
     orders.order_date,
+    orders.is_shipped,
     orders.order_id',
+
     'orders',
     "JOIN users ON orders.user_id = users.users_id
     JOIN address ON orders.address_id = address.address_id 
@@ -40,67 +42,72 @@ $product_size = explode(',', $data['product_size']);
 $product_quantity = explode(',', $data['product_quantity']);
 
 
-// handling accept and reject
-if (isset($_POST)) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $data['user_email'];
-    $order_date = $data['order_date'];
-    $delivery_address = $data['delivery_address'];
-    $total = $data['total'];
-    // handle accept 
-    if (isset($_POST['accept'])) {
+    // for mark as delivered
+    if (isset($_POST['markasdelivered'])) {
+        $order_id = $_POST['order_id'];
+        $query = select('order_id,order_date,address,total', 'orders', "JOIN address ON orders.address_id = address.address_id WHERE orders.order_id = $order_id ");
+        $order_id = $query[0]['order_id'];
+        $order_date = $query[0]['order_date'];
+        $delivery_address = $query[0]['address'];
+        $total = $query[0]['total'];
         $data = [
-            'is_accepted' => 1,
+            'is_paid' => 1,
+            'is_delivered' => 1,
+            'delivery_date' => date("Y-m-d"),
         ];
         update('orders', $data, "order_id = $order_id");
         $message = "Dear Customer,<br><br>
 
-Thank you for choosing SneakerStation. We are delighted to inform you that your order has been successfully placed and is currently being processed. <br>
-Your order will be delivered to the provided delivery address within 3 to 5 working days.<br><br>
+Congratulations! Your order from SneakerStation has been successfully delivered to your provided delivery address. We hope you are delighted with your new sneakers!<br><br>
 
 If you have any questions or need any assistance, please don't hesitate to reach out to our customer support team.<br><br>
 
 Here are the details of your order:<br>
-- Order id: {$order_id}<br>
+- Order Number: {$order_id}<br>
 - Order Date: {$order_date}<br>
 - Delivery Address: {$delivery_address}<br>
 - Total Amount: {$total}<br><br>
 
-Thank you for shopping with us. We look forward to serving you again in the future.<br><br>
+Thank you for choosing SneakerStation. We value your business and look forward to serving you again in the future.<br><br>
 
 Best regards,<br>
 The SneakerStation Team";
-
-
-        phpmailer($email, $message, "Order Placed Successfully");
-        header('Location:newOrders.php');
+phpmailer($email, $message, "Order Delivered");
+        header('Location:orderProgress.php');
     }
-    // handle reject 
-    if (isset($_POST['reject'])) {
+    // for mark as shipped
+    if (isset($_POST['markasshipped'])) {
+        $order_id = $_POST['order_id'];
+        $query = select('order_id,order_date,address,total', 'orders', "JOIN address ON orders.address_id = address.address_id WHERE orders.order_id = $order_id ");
+        $order_id = $query[0]['order_id'];
+        $order_date = $query[0]['order_date'];
+        $delivery_address = $query[0]['address'];
+        $total = $query[0]['total'];
         $data = [
-            'is_accepted' => 0,
+            'is_shipped' => 1
         ];
         update('orders', $data, "order_id = $order_id");
-        $message = "  Dear Customer,
-We hope this email finds you well. We regret to inform you that your recent order with SneakerStation has been canceled. We apologize for any inconvenience this may have caused.<br>
-Your satisfaction is our top priority, and we understand the importance of a seamless shopping experience.<br><br>
-The following are the details of the canceled order:<br><br>
-Order ID: {$order_id}<br>
-Order Date: {$order_date}<br>
-Delivery Address: {$delivery_address}<br>
-Total Amount: {$total}<br>
-If you have already made a payment for the order, rest assured that the amount will be refunded to your original payment method within the next 3 to 5 working days.<br>
-We understand that order cancellations can be frustrating, and we would like to extend our assistance in case you have any concerns or questions regarding the cancellation. <br>
-Please don't hesitate to reach out to our customer support team, and we'll be more than happy to assist you.<br><br>
-Once again, we apologize for any disappointment caused by this cancellation. We value your patronage and sincerely hope that this experience won't deter you from considering SneakerStation for future purchases.
-<br><br>
-Thank you for your understanding.
-<br><br>
-Best regards,
-<br><br>
-The SneakerStation Team";
+        $message = "Dear Customer,<br><br>
 
-        phpmailer($email, $message, "Order Cancellation Notification");
-        header('Location:newOrders.php');
+Thank you for choosing SneakerStation. We are pleased to inform you that your order has been shipped and is on its way to your provided delivery address. <br>
+Your order is expected to be delivered within the next 3 to 5 working days.<br><br>
+
+If you have any questions or need any assistance, please don't hesitate to reach out to our customer support team.<br><br>
+
+Here are the details of your order:<br>
+- Order Number: {$order_id}<br>
+- Order Date: {$order_date}<br>
+- Delivery Address: {$delivery_address}<br>
+- Total Amount: {$total}<br><br>
+
+We hope you enjoy your new sneakers! Thank you for shopping with us. Should you need anything else, feel free to contact us.<br><br>
+
+Best regards,<br>
+The SneakerStation Team";
+phpmailer($email, $message, "Order Shipped");
+        header('Location:orderProgress.php');
     }
 }
 
@@ -212,9 +219,14 @@ The SneakerStation Team";
         </div>
         <!-- for accept and reject buttons  -->
         <form action="" method="post">
+            <input type="hidden" name="order_id" value=<?=$data['order_id']?>>
             <div class="d-flex justify-content-end my-4 ">
-                <button class="btn btn-danger mx-2" name="reject">Reject</button>
-                <button class="btn btn-success" name="accept">Accept</button>
+
+                <?php if ($data['is_shipped'] == 0) { ?>
+                    <button class="btn btn-success mx-4" name="markasshipped"><i class="fa-solid fa-check" style="color: #fff;"></i> Mark As Shipped</button>
+                <?php } else { ?>
+                    <button class="btn btn-success mx-4" name="markasdelivered"><i class="fa-solid fa-check" style="color: #fff;"></i> Mark As Delivered</button>
+                <?php } ?>
             </div>
         </form>
     </div>

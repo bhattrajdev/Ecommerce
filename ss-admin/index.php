@@ -9,6 +9,8 @@ require '../helpers/delete.php';
 require './helpers/insertImages.php';
 require "./layout/header.php";
 require './components/message.php';
+require '../helpers/phpmailer.php';
+require '../vendor/autoload.php';
 
 
 

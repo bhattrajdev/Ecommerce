@@ -1,3 +1,30 @@
+<?php
+if(!empty($_GET['search'])){
+// // $search= $_GET['search'];
+// $search = $_GET['search'];
+// $searchData = select('DISTINCT p.product_id, p.name AS product_name, b.name AS brand_name,
+//  c.name AS category_name, p.price, pv.color_id, pv.size_id, p.discount', 
+//  'product AS p',
+//         "LEFT JOIN brand AS b ON p.brand_id = b.brand_id
+// LEFT JOIN category AS c ON p.category_id = c.category_id
+// LEFT JOIN productvariation AS pv ON p.product_id = pv.product_id
+// LEFT JOIN color AS col ON pv.color_id = col.color_id
+// LEFT JOIN size AS s ON pv.size_id = s.size_id
+// WHERE 
+//     p.name LIKE '%search%'
+//     OR b.name LIKE '%search%'
+//     OR c.name LIKE '%search%'
+//     OR col.name LIKE '%search%'
+//     OR s.name LIKE '%search%'");
+// }
+// echo "<pre>";   
+// print_r($searchData);
+// die();
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +40,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="assets/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -42,7 +69,7 @@
                             <i class="fas fa-user" style="color: #ffffff;"></i>
                         </button>
                         <div id="dropdown-content" class="dropdown-content" onmouseover="showDropdown()" onmouseout="hideDropdown()">
-                            <a href="#">History</a>
+                            <a href="<?= url('history.php') ?>">History</a>
                             <a href="<?= url('logout.php') ?>">Logout</a>
                         </div>
                     </div>
@@ -77,9 +104,11 @@
         </div>
     </nav>
     <!-- for search box -->
+    <form action="#">
     <div class="searchBox">
         <div class="container">
-            <input type="search" placeholder="Search Here" />
+                <input type="search" name="search" placeholder="Search Here" />
+            </div>
         </div>
-    </div>
+    </form>
     <!---------------------------------Navbar End---------------------------->

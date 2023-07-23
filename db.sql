@@ -142,3 +142,4 @@ CREATE TABLE orderproducts(
     productvariation_id int,
     FOREIGN KEY (productvariation_id) REFERENCES productvariation(productvariation_id)
 );
+ALTER TABLE `orders` ADD `is_shipped` ENUM('0','1') NOT NULL DEFAULT '0' AFTER `is_accepted`;

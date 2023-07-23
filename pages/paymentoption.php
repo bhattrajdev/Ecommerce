@@ -19,8 +19,12 @@ if(isset($_POST)){
             'message' => 'Please wait until your order is verified !!!',
             'type' => 'success'
         ];
+        unset($_SESSION['cartdata']);
         header('Location:index.php');
 
+    }
+    if(isset($_POST['esewa'])){
+       
     }
 }
 ?>
@@ -325,7 +329,7 @@ if(isset($_POST)){
             <div class="button_grp">
                 <form action="#" method="post">
                     <button class="buttons cod" name="cod" type="submit">Cash On Delivery</button>
-                    <button class="buttons esewa" type="submit">E-sewa</button>
+                    <button class="buttons esewa" name="esewa" type="submit">E-sewa</button>
                 </form>
             </div>
 

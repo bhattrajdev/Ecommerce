@@ -300,27 +300,29 @@ $product_quantity = explode(',', $data['product_quantity']);
             </div>
         </div>
     </div>
-    <div class="row">
 
-        <div class="col-md-6">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h4>Delivery Details</h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4 font-weight-bold">Delivered On:</div>
-                        <div class="col-md-8"><?= $data['delivery_date'] ?></div>
+
+    <?php if ($data['delivery_date'] != null) { ?>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4>Delivery Details</h4>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4 font-weight-bold">Payment Type:</div>
-                        <div class="col-md-8"><?= $data['payment_method'] ?></div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 font-weight-bold">Delivered On:</div>
+                            <div class="col-md-8"><?= $data['delivery_date'] ?></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 font-weight-bold">Payment Type:</div>
+                            <div class="col-md-8"><?= $data['payment_method'] ?></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
+    <?php } ?>
 
     <!-- Orders Details Table -->
     <div class="card">

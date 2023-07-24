@@ -21,11 +21,11 @@ if (!empty($_GET['search'])) {
     JOIN color AS col ON pv.color_id = col.color_id
     JOIN size AS s ON pv.size_id = s.size_id",
         "WHERE 
-    (product.name LIKE '$search'
-    OR brand.name LIKE '$search'
-    OR category.name LIKE '$search'
-    OR col.name LIKE '$search'
-    OR s.name LIKE '$search')
+    (product.name LIKE '%$search%'
+    OR brand.name LIKE '%$search%'
+        OR category.name LIKE '%$search%'
+    OR col.name LIKE '%$search%'
+    OR s.name LIKE '%$search%')
     GROUP BY product.product_id
     ORDER BY product.product_id DESC"
     );

@@ -25,14 +25,17 @@ function navResponsive(){
       x.style.display = "none";
     }
 }
+// for search
 function search(){
     let searchbox = document.querySelector('.searchBox')
    if (searchbox.style.display === "none") {
      searchbox.style.display = "flex";
    } else {
      searchbox.style.display = "none";
+    window.location.replace("index.php");
    }
 }
+// for clear search
 
 
 

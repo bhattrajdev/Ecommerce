@@ -4,7 +4,7 @@
           <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="offcanvasExample">
               <span class="navbar-toggler-icon" data-bs-target="#sidebar"></span>
           </button>
-          <a class="navbar-brand me-auto ms-lg-0 ms-3 text-uppercase fw-bold" href="#"> <img src="<?= url('/public/images/Logo.png') ?>" width="20px" alt=""> Sneaker Station</a>
+          <a class="navbar-brand me-auto ms-lg-0 ms-3 text-uppercase fw-bold" href="<?= url('/ss-admin')?>"> <img src="<?= url('/public/images/Logo.png') ?>" width="20px" alt=""> Sneaker Station</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavBar" aria-controls="topNavBar" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
           </button>

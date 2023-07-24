@@ -69,7 +69,49 @@ $used = select(
 );
 
 ?>
+<style>
 
+
+.item:hover {
+        box-shadow: 10px 20px 40px -10px rgba(0, 0, 0, 0.25);
+    }
+
+    .item img {
+        width: 360px;
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        transition: transform 0.3s;
+        height: 200px;
+    }
+
+   a {
+        text-decoration: none;
+        color: #000000;
+    }
+
+    .item .brand {
+        font-size: 20px;
+        margin: 5px 0;
+    }
+
+     .price_discount {
+        display: flex;
+        justify-content: space-between;
+        margin: 15px 0;
+    }
+
+    .products .item .price {
+        font-size: 20px;
+    }
+
+    .products .discount {
+        color: green;
+        font-weight: 600;
+        font-size: 18px;
+    }
+</style>
 
 <section id="homepage">
     <!---------------------------------Carousel Start---------------------------->

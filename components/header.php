@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,7 +23,7 @@
     <!---------------------------------Navbar Start---------------------------->
     <nav>
         <div class="navdata container">
-            <img src="<?= url('public/images/Logo.png') ?>" alt="image not found" />
+            <a href="<?=url('')?>"><img src="<?= url('public/images/Logo.png') ?>" alt="image not found" /></a>
             <div class="nav-items">
                 <a href="index.php" class="<?= $title === 'index' ? 'active' : '' ?>">home</a>
                 <a href="male.php" class="<?= $title === 'male' ? 'active' : '' ?>">male</a>
@@ -32,7 +31,11 @@
                 <a href="kids.php" class="<?= $title === 'kids' ? 'active' : '' ?>">kids</a>
                 <a href="used.php" class="<?= $title === 'used' ? 'active' : '' ?>">Used</a>
                 <a href="sellus.php" class="<?= $title === 'sellus' ? 'active' : '' ?>">sell us</a>
-                <i class="fa-solid fa-magnifying-glass" onclick="search();"></i>
+                <?php if (isset($_GET['search'])) { ?>
+                    <i class="fa-solid fa-xmark" onclick="search();"></i>
+                <?php } else { ?>
+                    <i class="fa-solid fa-magnifying-glass" onclick="search();"></i>
+                <?php } ?>
             </div>
             <?php
             if (isset($_SESSION['name']) && isset($_SESSION['email'])) { ?>

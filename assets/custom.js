@@ -71,8 +71,9 @@ $(document).ready(function () {
     autoplayHoverPause: true,
     responsive: {
       0: {
-        items: 1,
+        items: 2,
         nav: false,
+        navText:false,
         slideBy: 1, // Slide by 1 item
       },
       600: {

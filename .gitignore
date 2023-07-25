@@ -1,2 +1,8 @@
 
 /public/images/shoes
+
+/vendor/firebase
+/vendor/guzzlehttp
+/vendor/monolog
+/vendor/phpseclib
+/vendor/psr

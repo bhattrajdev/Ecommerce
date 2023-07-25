@@ -144,7 +144,7 @@ nav {
   text-align: start;
   transition: 0.2s ease-in;
   display: none;
-  z-index: 1;
+  z-index: 10000;
 }
 
 #burgernav.items {
@@ -234,9 +234,14 @@ nav {
   nav .nav-items {
     display: none;
   }
+.user-details{
+margin-left: auto;
+margin-right: 20px;
 
+}
   .login-register {
     display: none;
+    padding-right: 40px;
   }
 
   .searchBox {
@@ -1045,14 +1050,14 @@ ul {
 
 .owl-carousel .item {
   position: relative;
-  z-index: 100;
+  /* z-index: 9999; */
   background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   padding: 20px;
-
+ 
   width: 100%;
 }
 
@@ -1127,6 +1132,20 @@ ul {
   font-size: 18px;
 }
 
+/* media query  */
+@media screen and (max-width: 900px) {
+
+.owl-carousel .item img {
+    width: 100%;
+ 
+    object-fit: contain;
+  }
+.owl-nav .owl-prev,
+.owl-nav .owl-next {
+  display: none;
+}
+
+}
 /*---------------------------------- owl carousel end--------------------*/
 
 

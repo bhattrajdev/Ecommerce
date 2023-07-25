@@ -6,7 +6,8 @@ require 'helpers/insert.php';
 require 'helpers/select.php';
 require 'helpers/update.php';
 require 'helpers/delete.php';
-require 'vendor/autoload.php';
+require './vendor/autoload.php';
+
 
 
 

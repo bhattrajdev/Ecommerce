@@ -2,14 +2,27 @@
 CREATE DATABASE SneakerStation;
 
 -- For creating users
-CREATE TABLE Users(
-    users_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+-- CREATE TABLE Users(
+--     users_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+--     name VARCHAR(200),
+--     email VARCHAR(100),
+--     password VARCHAR(200),
+--     verification_code INT,
+--     is_verified ENUM('0', '1') DEFAULT '0'
+-- );
+
+-- For creating users modified
+CREATE TABLE Users (
+    user_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(200),
     email VARCHAR(100),
     password VARCHAR(200),
+    google_id VARCHAR(100),
+    facebook_id VARCHAR(100),
     verification_code INT,
     is_verified ENUM('0', '1') DEFAULT '0'
 );
+
 
 
 -- for creating color 

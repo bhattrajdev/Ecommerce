@@ -67,11 +67,11 @@ $used = select(
      GROUP BY product.product_id
      ORDER BY product.product_id DESC"
 );
-
+echo "<pre>";
+var_dump($_SESSION);
+die();
 ?>
 <style>
-
-
 .item:hover {
         box-shadow: 10px 20px 40px -10px rgba(0, 0, 0, 0.25);
     }

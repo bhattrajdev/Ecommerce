@@ -75,6 +75,12 @@ Thank you for choosing SneakerStation. We value your business and look forward t
 Best regards,<br>
 The SneakerStation Team";
 phpmailer($email, $message, "Order Delivered");
+
+        $_SESSION['message'] = [
+            'title' => 'Success',
+            'message' => 'Order marked as delivered successfully',
+            'type' => 'success'
+        ];
         header('Location:orderProgress.php');
     }
     // for mark as shipped
@@ -107,6 +113,11 @@ We hope you enjoy your new sneakers! Thank you for shopping with us. Should you 
 Best regards,<br>
 The SneakerStation Team";
 phpmailer($email, $message, "Order Shipped");
+        $_SESSION['message'] = [
+            'title' => 'Success',
+            'message' => 'Order marked as shipped successfully',
+            'type' => 'success'
+        ];
         header('Location:orderProgress.php');
     }
 }

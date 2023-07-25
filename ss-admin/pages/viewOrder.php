@@ -72,6 +72,11 @@ The SneakerStation Team";
 
 
         phpmailer($email, $message, "Order Placed Successfully");
+        $_SESSION['message'] = [
+            'title' => 'Success',
+            'message' => 'Order marked as accepted successfully',
+            'type' => 'success'
+        ];
         header('Location:newOrders.php');
     }
     // handle reject 
@@ -100,6 +105,11 @@ Best regards,
 The SneakerStation Team";
 
         phpmailer($email, $message, "Order Cancellation Notification");
+        $_SESSION['message'] = [
+            'title' => 'Success',
+            'message' => 'Order marked as rejected successfully',
+            'type' => 'success'
+        ];
         header('Location:newOrders.php');
     }
 }

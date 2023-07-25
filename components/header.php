@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="assets/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.4/axios.min.js"></script>
+    <script src="https://cdn.ckeditor.com/4.16.2/full/ckeditor.js"></script>
 </head>
 
 <body>
@@ -65,10 +68,10 @@
                         <i class="fa-solid fa-xmark"></i>
                     </div>
                     <form action="searchResults.php">
-                            <div class="burgersearch">
+                        <div class="burgersearch">
                             <input type="search" id="search" placeholder="Search Here" />
                         </div>
-                        </form>
+                    </form>
                     <li><a href="index.php">Home</a></li>
                     <li><a href="male.php">Male</a></li>
                     <li><a href="women.php">women</a></li>

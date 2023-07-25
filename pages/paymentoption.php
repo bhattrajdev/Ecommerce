@@ -6,14 +6,14 @@ $address = $_SESSION['selected_address_id'];
 $data = select('*', 'address', "WHERE address_id =" . $_SESSION['selected_address_id']);
 $address = $data[0];
 
-if(isset($_POST)){
+if (isset($_POST)) {
     $order_id = $_SESSION['order_id'];
-    if(isset($_POST['cod'])){
-        $data=[
-            'payment_method'=>'cash',
-            'order_date'=> date("Y-m-d"),
+    if (isset($_POST['cod'])) {
+        $data = [
+            'payment_method' => 'cash',
+            'order_date' => date("Y-m-d"),
         ];
-        update('orders',$data,"order_id = $order_id");
+        update('orders', $data, "order_id = $order_id");
         $_SESSION['message'] = [
             'title' => 'Success',
             'message' => 'Please wait until your order is verified !!!',
@@ -21,13 +21,10 @@ if(isset($_POST)){
         ];
         unset($_SESSION['cartdata']);
         header('Location:index.php');
-
-    }
-    if(isset($_POST['esewa'])){
-       
     }
 }
 ?>
+
 
 <!-- custom inline css -->
 <style>
@@ -213,8 +210,10 @@ if(isset($_POST)){
         font-size: 17px;
         font-weight: 600;
     }
+    #payment-button img{
+        width: 150px;
 
-    .line {
+    } .line {
         border-bottom: 1px solid black;
     }
 
@@ -329,10 +328,78 @@ if(isset($_POST)){
             <div class="button_grp">
                 <form action="#" method="post">
                     <button class="buttons cod" name="cod" type="submit">Cash On Delivery</button>
-                    <button class="buttons esewa" name="esewa" type="submit">E-sewa</button>
                 </form>
+                <button id="payment-button"><img src="<?= url('public/images/khalti.jpg') ?>"></button>
             </div>
 
         </div>
     </div>
-</div
+</div>
+
+<script>
+    // Your Khalti public key
+    var publicKey = "test_public_key_2de166fa2c874f3faa716209e31f3882"; // Replace this with your actual public key
+
+    // Create a Khalti Checkout instance
+    var checkout = new KhaltiCheckout({
+        "publicKey": publicKey,
+        "productIdentity": "1234565126527890",
+        "productName": "new balance 1",
+        "productUrl": "http://localhost/SneakersStation/productDetail.php",
+        "paymentPreference": [
+            "KHALTI",
+            "EBANKING",
+            "MOBILE_BANKING",
+            "CONNECT_IPS",
+            "SCT"
+        ],
+        "eventHandler": {
+            onSuccess(payload) {
+                console.log(payload);
+                alert('Payment successful!');
+                if (payload.idx) {
+                    axios.post('https://khalti.com/api/v2/payment/verify', {
+                            token: payload.token, // Pass the payment token
+                            amount: 1000 // Replace this with the actual amount in paisa
+                        }, {
+                            headers: {
+                                'Authorization': 'test_secret_key_112ed1b55aee46498542a2527d686d55', // Replace this with your actual secret key
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(response => {
+                            // Handle the success response from the server-side verification
+                            console.log(response);
+                            if (response.data.success) {
+                                // Payment verification successful
+                                window.location = response.data.redirecto;
+                            } else {
+                                // Payment verification failed
+                                checkout.hide();
+                            }
+                        })
+                        .catch(error => {
+                            // Handle the error response from the server-side verification
+                            console.error(error);
+                        });
+                }
+            },
+            onError(error) {
+                console.log("Payment error");
+                console.log(error);
+            },
+            onClose() {
+                console.log('Widget is closing');
+            }
+        }
+    });
+
+    // Click event listener for the payment button
+    var btn = document.getElementById("payment-button");
+    btn.onclick = function() {
+        // Show the Khalti Checkout dialog
+        checkout.show({
+            amount: 1000 // Replace this with the actual amount in paisa
+        });
+    };
+</script>

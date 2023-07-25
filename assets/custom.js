@@ -219,3 +219,7 @@ $(document).ready(function () {
 /*----------------------------------navbar user button toogle end----------------------------------*/
 
 
+  // Initialize CKEditor
+   ClassicEditor.create(document.querySelector("#editor")).catch((error) => {
+     console.error(error);
+   });

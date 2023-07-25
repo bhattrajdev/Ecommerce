@@ -3,8 +3,11 @@ $user_id = $_SESSION['users_id'];
 $data = select('*', 'orders', "WHERE user_id = $user_id ORDER BY order_id DESC");
 ?>
 
-
 <style>
+    .order{
+        display: flex;
+        justify-content: space-between;
+    }
     table {
         width: 100%;
         border-collapse: collapse;
@@ -58,8 +61,9 @@ $data = select('*', 'orders', "WHERE user_id = $user_id ORDER BY order_id DESC")
 <?php if (empty($data)) { ?>
     <h2 class="no_data_found container mt-4" style="min-height:80vh;">No Data Found</h2>
 <?php } else { ?>
-    <div class="container" style="margin-top: 20px;">
+    <div class="container order" style="margin-top: 20px;">
         <h2>ORDER HISTORY</h2>
+       <a href="#" class="sold_btn">SOLD HISTORY</a>
     </div>
     <div class="container" style="min-height:80vh;">
         <table>

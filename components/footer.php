@@ -5,10 +5,9 @@
               <div class="footer-col">
                   <h4>Company</h4>
                   <ul>
-                      <li><a href="#">About Us</a></li>
-                      <li><a href="#">Our Services</a></li>
-                      <li><a href="#">Privacy</a></li>
-                      <li><a href="#">Policy</a></li>
+                      <li><a href="<?= url('company.php#about_us') ?>">About Us</a></li>
+                      <li><a href="<?= url('company.php#our_services') ?>">Our Services</a></li>
+                      <li><a href="<?= url('company.php#privacy_policy') ?>">Privacy Policy</a></li>
                   </ul>
               </div>
               <div class="footer-col">
@@ -23,7 +22,7 @@
               <div class="footer-col">
                   <h4>Contact</h4>
                   <ul style="color: #efe1e1;;line-height: 3.5vh;">
-                      <li><i class="fa-solid fa-envelope" style="color: #ffffff;"></i>&nbsp; sneakersstaion@gmail.com </li>
+                      <!-- <li><i class="fa-solid fa-envelope" style="color: #ffffff;"></i>&nbsp; sneakersstaion@gmail.com </li> -->
                       <li><i class="fa-solid fa-phone" style="color: #ffffff;"></i>&nbsp; 980000000</li>
                       <li><i class="fa-solid fa-location-dot" style="color: #ffffff;"></i> &nbsp; Kathmandu, Nepal</li>
                       <li></li>

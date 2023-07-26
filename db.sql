@@ -15,7 +15,7 @@ CREATE DATABASE SneakerStation;
 CREATE TABLE Users (
     user_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(200),
-    email VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
     password VARCHAR(200),
     google_id VARCHAR(100),
     facebook_id VARCHAR(100),
@@ -121,7 +121,7 @@ INSERT INTO admin (email,password)VALUES('devrajbhatt010@gmail.com',MD5('123'));
 CREATE TABLE address(
     address_id int PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id int,
-    FOREIGN KEY (user_id) REFERENCES users(users_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
     address varchar(255),
     email varchar(100),
     phone varchar(100)
@@ -131,7 +131,7 @@ CREATE TABLE address(
 CREATE TABLE orders (
     order_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     user_id INT,
-    FOREIGN KEY (user_id) REFERENCES users(users_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
     address_id INT,
     FOREIGN KEY (address_id) REFERENCES address(address_id),
     order_date VARCHAR(100),
@@ -165,9 +165,9 @@ CREATE TABLE seller(
     product_id int,
     FOREIGN KEY (product_id) REFERENCES product(product_id),
     vendor_id int,
-    FOREIGN KEY (vendor_id) REFERENCES users(users_id),
+    FOREIGN KEY (vendor_id) REFERENCES users(user_id),
     sold_date varchar(100),
     is_bought ENUM("0","1")DEFAULT '0',
     buyer_id int, 
-    FOREIGN KEY (buyer_id) REFERENCES users(users_id)
+    FOREIGN KEY (buyer_id) REFERENCES users(user_id)
 );

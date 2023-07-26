@@ -13,7 +13,7 @@ $client->setClientSecret($client_secret);
 
 # redirection location is the path to login.php
 $redirect_uri =
-'http://localhost/SneakersStation/demo';
+'http://localhost/SneakersStation/login';
 $client->setRedirectUri($redirect_uri);
 $client->addScope("email");
 $client->addScope("profile");

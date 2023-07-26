@@ -1,4 +1,52 @@
 <?php
+require('googlelogin.php');
+$login_url = htmlspecialchars($client->createAuthUrl());
+if (isset($_GET['code'])) {
+    $code = $_GET['code'];    
+$token = $client->fetchAccessTokenWithAuthCode($code);
+    if (isset($token['error'])) {
+        header('Location: login.php');
+        exit;
+    }
+    if (is_array($token) && isset($token['access_token'])) {
+            $client->setAccessToken($token);
+            if ($client->isAccessTokenExpired()) {
+                header('Location: logout.php');
+                exit;
+            }
+            $google_oauth = new Google_Service_Oauth2($client);
+            $user_info = $google_oauth->userinfo->get();
+            $google_id = trim($user_info['id']);
+            $f_name = trim($user_info['given_name']);
+            $l_name = trim($user_info['family_name']);
+            $name = $f_name . ' ' . $l_name;
+            $email = trim($user_info['email']);
+
+            $checkData = select('*', 'users', "WHERE email = '$email' AND google_id = $google_id");
+            if ($checkData > 0) {
+                $_SESSION['name'] = $checkData[0]['name'];
+                $_SESSION['email'] = $checkData[0]['email'];
+                $_SESSION['users_id'] = $checkData[0]['user_id'];
+                header('Location: index.php');
+            } else {
+                $data = [
+                    'name' => $name,
+                    'email' => $email,
+                    'google_id' => $google_id,
+                    'is_verified' => 1
+                ];
+                $user_id = insert('users', $data);
+                $_SESSION['name'] = $name;
+                $_SESSION['email'] = $email;
+                $_SESSION['users_id'] = $user_id;
+                header('Location: index.php');
+            }
+    } else {
+        header('Location: login.php');
+        exit;
+    }
+}
+
 $errors = [
     'email' => '',
     'password' => '',
@@ -71,8 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="already-text">Or Continue With</div>
         <div class="continue-width">
 
-            <a href="#" class="facebook"><img src="<?= url("/public/images/facebook.png"); ?>"></a>
-            <a href="#" class="google"><img src="<?= url("/public/images/google.png"); ?>"></a>
+           <a href="<?= $login_url ?>" class="google" rel="nofollow"><img src="<?= url("/public/images/google.png"); ?>"></a>
         </div>
         <div class="already-text">New Here?<a href="register.php"> &nbsp;Register</a></div>
     </div>

@@ -1,33 +1,7 @@
 <?php
-    if (!isset($_SESSION['token'])) {
-        header('Location: login.php');
-        exit;
-    }
-    require('googlelogin.php');
 
-    $client->setAccessToken($_SESSION['token']);
-
-    if ($client->isAccessTokenExpired()) {
-        header('Location: logout.php');
-        exit;
-    }
-    $google_oauth = new Google_Service_Oauth2($client);
-    $user_info = $google_oauth->userinfo->get();
-$google_id = trim($user_info['id']);
-  $f_name = trim($user_info['given_name']);
-  $l_name = trim($user_info['family_name']);
-  $email = trim($user_info['email']);
-  echo "<pr>";
-  echo 'GOOGLE ID = '.$google_id;
-  echo "<br>";
-  echo 'FIRST NAME = '.$f_name;
-echo "<br>";
-  echo 'last Name = '.$l_name;
-echo "<br>";
-  echo 'Email = '.$email;
-
-die();
-
+ 
+   
 
 
 $male = select(

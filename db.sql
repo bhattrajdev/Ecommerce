@@ -18,7 +18,6 @@ CREATE TABLE Users (
     email VARCHAR(100) UNIQUE,
     password VARCHAR(200),
     google_id VARCHAR(100),
-    facebook_id VARCHAR(100),
     verification_code INT,
     is_verified ENUM('0', '1') DEFAULT '0'
 );

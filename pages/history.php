@@ -63,7 +63,7 @@ $data = select('*', 'orders', "WHERE user_id = $user_id ORDER BY order_id DESC")
 <?php } else { ?>
     <div class="container order" style="margin-top: 20px;">
         <h2>ORDER HISTORY</h2>
-       <a href="#" class="sold_btn">SOLD HISTORY</a>
+       <a href="<?=url('saleshistory')?>" class="sold_btn">SALES HISTORY</a>
     </div>
     <div class="container" style="min-height:80vh;">
         <table>
@@ -106,7 +106,7 @@ $data = select('*', 'orders', "WHERE user_id = $user_id ORDER BY order_id DESC")
 
 
 
-                        <td><a href="vieworderHistory.php?id=<?= $item['order_id'] ?>"><i class="fa-solid fa-eye"></i> View</a></td>
+                        <td><a href="vieworderHistory.php?id=<?= $item['order_id'] ?>" class="btn btn-success"><i class="fa-solid fa-eye"></i> View</a></td>
                     </tr>
                 <?php } ?>
             </tbody>

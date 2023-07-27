@@ -2,7 +2,7 @@
 $data = select(
     '*',
     'orders',
-    "JOIN users ON orders.user_id = users.users_id 
+    "JOIN users ON orders.user_id = users.user_id 
     WHERE 
         (orders.is_accepted = '0') 
         OR 

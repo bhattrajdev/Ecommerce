@@ -30,20 +30,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $email = $_POST['email'];
         $password = md5($_POST['password']);
         $confirm_passowrd = md5($_POST['confirmpassword']);
-        $_SESSION['email'] = $email;
+        
         $min = 100000;
         $max = 999999;
         $randomNumber = rand($min, $max);
 
+        $checkData = select('*', 'users', "WHERE email = '$email'");
+        if ($checkData > 0) {
+            $_SESSION['message'] = [
+                'title' => 'ERROR',
+                'message' => 'User already exists',
+                'type' => 'error'
+            ];
+        }
 
-        if ($password === $confirm_passowrd) {
+
+        else{
+        if($password === $confirm_passowrd) {
             $data = [
                 'name' => $name,
                 'email' => $email,
                 'password' => $password,
                 'verification_code' => $randomNumber,
             ];
-            insert('Users', $data);
+                $_SESSION['email'] = $email;
+          
+            insert('users', $data);
             $_SESSION['registered'] = true;
             $body =
                 'Dear Customer,
@@ -64,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header('Location:register_validation.php');
         }
     }
+}
 }
 
 ?>
@@ -90,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label for="confirmpassword" class="form-label">Confirm Password: <a style="color:red;"><?= $errors['confirmpassword']; ?></a></label><br>
                 <input type="password" name="confirmpassword" class="form-input" id="confirmpassword">
             </div>
-            <button class="btn">Register</button>
+            <button class="button">Register</button>
         </form>
 
         <div class="already-text">Already a member?<a href="login.php"> &nbsp;Login</a></div>

@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label for="password" class="form-label">Password:<span style="color:red"><?= $errors['password'] ?></span></label><br>
                 <input type="password" name="password" class="form-input" id="password">
             </div>
-            <button class="btn">Sign Up</button>
+            <button class="button">Sign Up</button>
         </form>
         <div class="already-text">Or Continue With</div>
         <div class="continue-width">

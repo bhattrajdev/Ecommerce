@@ -17,7 +17,7 @@ $output = select(
     orders.order_id',
 
     'orders',
-    "JOIN users ON orders.user_id = users.users_id
+    "JOIN users ON orders.user_id = users.user_id
     JOIN address ON orders.address_id = address.address_id 
     JOIN orderproducts ON orders.order_id = orderproducts.order_id
     JOIN productvariation ON orderproducts.productvariation_id = productvariation.productvariation_id

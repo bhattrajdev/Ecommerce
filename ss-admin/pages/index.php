@@ -7,7 +7,15 @@
             $productCount = ++$key;
         }
         $orderCount = 0;
-        $orders = select('*', 'orders', 'WHERE orders.is_accepted IS NULL');
+    $orders = select(
+    '*',
+    'orders',
+    "JOIN users ON orders.user_id = users.user_id
+    JOIN orderproducts ON orders.order_id = orderproducts.order_id
+    JOIN product ON orderproducts.product_id = product.product_id 
+    WHERE orders.is_accepted IS NULL AND product.seller_id IS NULL 
+    ORDER BY orders.order_id DESC"
+                                                        );
         foreach ($orders as $key => $a) {
             $orderCount = ++$key;
         }

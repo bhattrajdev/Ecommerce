@@ -1,5 +1,5 @@
 <?php
-$data = select('*', 'orders', "JOIN users ON orders.user_id = users.users_id JOIN address ON orders.address_id = address.address_id WHERE orders.is_accepted = '1' AND orders.is_delivered ='0'  ORDER BY order_id DESC");
+$data = select('*', 'orders', "JOIN users ON orders.user_id = users.user_id JOIN address ON orders.address_id = address.address_id WHERE orders.is_accepted = '1' AND orders.is_delivered ='0'  ORDER BY order_id DESC");
 
 $email = $_SESSION['email'];
 // handling marked as delivered button

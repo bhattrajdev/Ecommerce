@@ -374,7 +374,7 @@ if (!isset($_SESSION['name']) && !isset($_SESSION['email']) && !isset($_SESSION[
                         <label class="form-label" for="phone">Phone: <span style="color:red"><?= $errors['phone'] ?? '' ?></span></label>
                         <input type="text" id="phone" name="phone" value="<?= isset($_POST['edit']) ? $update_address['phone'] : $oldvalues['phone'] ?>" class="form-control" />
                     </div>
-                    <div class="col-md-4"><button class="btn" name="<?= isset($_POST['edit']) ? 'update_address' : 'add_address' ?>"><?= isset($_POST['edit']) ? "Update" : "Add" ?></button></div>
+                    <div class="col-md-4"><button class="button" name="<?= isset($_POST['edit']) ? 'update_address' : 'add_address' ?>"><?= isset($_POST['edit']) ? "Update" : "Add" ?></button></div>
 
                 </form>
             </div>
@@ -411,7 +411,7 @@ if (!isset($_SESSION['name']) && !isset($_SESSION['email']) && !isset($_SESSION[
                         <hr class="horizonatal_row">
                     <?php } ?>
                 </div>
-                <input type="submit" name="form-submit" style="margin-top: 20px;" class="btn" value="Next">
+                <input type="submit" name="form-submit" style="margin-top: 20px;" class="button" value="Next">
             </form>
 
 

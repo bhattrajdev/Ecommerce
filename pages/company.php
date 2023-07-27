@@ -155,7 +155,7 @@
         <div class="image-with-description mx-auto">
             <div class="description-container">
                 <p>
-                    "At Sneaker Station, we're your ultimate sneaker destination, bringing you a handpicked collection of the hottest and most
+                    At Sneaker Station, we're your ultimate sneaker destination, bringing you a handpicked collection of the hottest and most
                     exclusive kicks. From new releases to gently used favorites, our platform caters to every sneakerhead's dream.
                     Step up your style with secure payments and top-notch customer support. Plus, become a seller and share your sneaker
                     passion with our vibrant community. Elevate your sneaker game today at Sneaker Station

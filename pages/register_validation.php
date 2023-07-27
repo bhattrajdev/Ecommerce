@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <a style="color: red;"><?= $errors['vcode'] ?></a>
                 <input type="text" name="vcode" class="form-input" id="vcode">
             </div>
-            <button class="btn">Submit</button>
+            <button class="button">Submit</button>
         </form>
     </div>
 </section>

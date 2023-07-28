@@ -34,7 +34,7 @@ if (!empty($_GET['search'])) {
 ?>
 
 <?php if (empty($element)) { ?>
-    <h2 class="no_data_found container">No Data Found</h2>
+    <h4 class="no_data_found container">No Data Found</h4>
 <?php } else { ?>
 
     <section id="pages">

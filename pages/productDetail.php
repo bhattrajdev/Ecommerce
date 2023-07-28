@@ -1,47 +1,109 @@
 <?php
 $product_id = $_GET['id'];
 
-// Add to cart and buy now
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!isset($_SESSION['name']) || !isset($_SESSION['email']) || !isset($_SESSION['users_id'])) {
-        header('Location: login.php');
-        exit();
-    }
+    $quantityfetch = select(
+        "product.quantity AS product_quantity",
+        "product",
+        "WHERE product.product_id = $product_id"
+    );
 
-    $user_id = $_SESSION['users_id'];
-    $quantity = $_POST['quantity'];
-    $size = $_POST['size'];
-    $color = $_POST['color'];
-    $productname = $_POST['productname'];
-    $productprice = $_POST['productprice'];
-    $productimage = $_POST['singleimage'];
+    // Accessing the 0th element of the array
+    $data = $quantityfetch[0];
+    $dbquantity = $data['product_quantity'];
 
-    if (!empty($size) && !empty($color)) {
-        if (isset($_POST['add_to_cart'])) {
-            $data = select('*', 'productvariation', "WHERE product_id = $product_id AND color_id = $color AND size_id = $size");
+    // Add to cart and buy now
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (!isset($_SESSION['name']) || !isset($_SESSION['email']) || !isset($_SESSION['users_id'])) {
+            header('Location: login.php');
+            exit();
+        }
 
-            if (!empty($data)) {
-                $productvariation_id = $data[0]['productvariation_id'];
+        $user_id = $_SESSION['users_id'];
+        $quantity = $_POST['quantity'];
+        $size = $_POST['size'];
+        $color = $_POST['color'];
+        $productname = $_POST['productname'];
+        $productprice = $_POST['productprice'];
+        $productimage = $_POST['singleimage'];
+        $productvariation_id = '';
 
-                // Check if the item already exists in the cart
-                $itemExists = false;
-                $cartItems = $_SESSION['cartdata'];
+    if ($dbquantity === null || $dbquantity >= $quantity || $quantity == null) {        
+        if (!empty($size) && !empty($color)) {
 
-                foreach ($cartItems as $cart) {
-                    if ($cart['user_id'] == $user_id && $cart['product_id'] == $product_id && $cart['productvariation_id'] == $productvariation_id) {
-                        $itemExists = true;
-                        break;
+            if (isset($_POST['add_to_cart'])) {
+                $data = select('*', 'productvariation', "WHERE product_id = $product_id AND color_id = $color AND size_id = $size");
+
+                if (!empty($data)) {
+                    $productvariation_id = $data[0]['productvariation_id'];
+
+                    // Check if the item already exists in the cart
+                    $itemExists = false;
+                    $cartItems = $_SESSION['cartdata'];
+
+                    foreach ($cartItems as $cart) {
+                        if ($cart['user_id'] == $user_id && $cart['product_id'] == $product_id && $cart['productvariation_id'] == $productvariation_id) {
+                            $itemExists = true;
+                            break;
+                        }
+                    }
+
+                    if ($itemExists) {
+                        // Give an error message if the product already exists in the cart
+                        $_SESSION['message'] = [
+                            'title' => 'Error',
+                            'message' => 'The product already exists in the cart with the same size and color.',
+                            'type' => 'error'
+                        ];
+                            header("Refresh:0");
+                    } else {
+                        $cartData = [
+                            'user_id' => $user_id,
+                            'product_id' => $product_id,
+                            'productvariation_id' => $productvariation_id,
+                            'quantity' => $quantity,
+                            'max_quantity'=>$dbquantity,
+                            'product_image' => $productimage,
+                            'product_name' => $productname,
+                            'product_price' => $productprice,
+                        ];
+
+                        // store the data in session
+                        $_SESSION['cartdata'][] = $cartData;
+                        $_SESSION['message'] = [
+                            'title' => 'Success',
+                            'message' => 'Product successfully added to the cart.',
+                            'type' => 'success'
+                        ];
+                            header("Refresh:0");
+
+                    }
+                } else {
+                    $_SESSION['message'] = [
+                        'title' => 'Error',
+                        'message' => 'No matching product variation found.',
+                        'type' => 'error'
+                    ];
+                        header("Refresh:0");
+                }
+            } elseif (isset($_POST['buy_now'])) {
+                if ($productvariation_id === NULL) {
+                    // If the $productvariation_id is still NULL, try to find it again.
+                    $data = select('*', 'productvariation', "WHERE product_id = $product_id AND color_id = $color AND size_id = $size");
+                    if (!empty($data)) {
+                        $productvariation_id = $data[0]['productvariation_id'];
+                    } else {
+                        $_SESSION['message'] = [
+                            'title' => 'Error',
+                            'message' => 'No matching product variation found.',
+                            'type' => 'error'
+                        ];
+                            header("Refresh:0");
                     }
                 }
 
-                if ($itemExists) {
-                    // Give an error message if the product already exists in the cart
-                    $_SESSION['message'] = [
-                        'title' => 'Error',
-                        'message' => 'The product already exists in the cart with the same size and color.',
-                        'type' => 'error'
-                    ];
-                } else {
+                if ($productvariation_id !== NULL) {
+                    $total = $productprice + ($productprice * 12) / 100 + 200;
+                    $_SESSION['total'] = $total;
                     $cartData = [
                         'user_id' => $user_id,
                         'product_id' => $product_id,
@@ -54,34 +116,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     // store the data in session
                     $_SESSION['cartdata'][] = $cartData;
-                    $_SESSION['message'] = [
-                        'title' => 'Success',
-                        'message' => 'Product successfully added to the cart.',
-                        'type' => 'success'
-                    ];
+
+                    header('Location:checkout.php');
                 }
-            } else {
-                $_SESSION['message'] = [
-                    'title' => 'Error',
-                    'message' => 'No matching product variation found.',
-                    'type' => 'error'
-                ];
             }
-        } elseif (isset($_POST['buy_now'])) {
-            // Handle buy now functionality
-            echo "Hello world, this is buy now.";
-        }
+        } else {
+            $_SESSION['message'] = [
+                'title' => 'Error',
+                'message' => 'Please select the desired size and color.',
+                'type' => 'error'
+            ];
+        header("Refresh:0");
+    }
     } else {
         $_SESSION['message'] = [
             'title' => 'Error',
-            'message' => 'Please select the desired size and color.',
+            'message' => "product qunatity cannot be more than $dbquantity",
             'type' => 'error'
         ];
+        header("Refresh:0");
     }
-
-    header("Refresh:0");
 }
-
 
 
 // query to fetch data from tables
@@ -91,6 +146,7 @@ $element = select(
     product.product_id AS product_id, 
     product.name AS product_name, 
     product.price AS product_price,
+    product.quantity AS product_quantity,
     brand.name AS brand_name, 
     category.name AS category_name, 
     GROUP_CONCAT(DISTINCT productgallery.name) AS images,
@@ -116,6 +172,10 @@ $element = select(
 
 // accessing the 0th element of the array
 $data = $element[0];
+
+
+
+
 
 
 

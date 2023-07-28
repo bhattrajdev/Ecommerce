@@ -61,11 +61,11 @@ $errors = [
 ];
 
 if (!empty($_POST)) {
-   
+
     foreach ($_POST as $key => $value) {
         if (empty($_POST[$key])) {
             $errors[$key] = ucfirst($key) . " field is required";
-        } 
+        }
     }
     if (empty($_POST['color'])) {
         $errors['color'] = "Color field is required";
@@ -79,7 +79,7 @@ if (!empty($_POST)) {
     if (empty($_POST['category'])) {
         $errors['category'] = "Category field is required";
     }
-
+$errors['quantity'] = '';
     if (!array_filter($errors)) {
         // Updating product table
 
@@ -120,19 +120,19 @@ if (!empty($_POST)) {
             // Delete existing product variations
             delete('productvariation', 'product_id', $product_id);
         }
-                $productvariation = [
-                    'product_id' => $product_id,
-                    'color_id' => $updateColor,
-                    'size_id' => $UpdateSize,
-                ];
-                insert(
-                    'productvariation',
-                    $productvariation
-                );
-            
+        $productvariation = [
+            'product_id' => $product_id,
+            'color_id' => $updateColor,
+            'size_id' => $UpdateSize,
+        ];
+        insert(
+            'productvariation',
+            $productvariation
+        );
 
 
-        
+
+
         // updating images
         if (!empty($_FILES['images']['name'][0])) {
             // Removing old images
@@ -209,18 +209,9 @@ if (!empty($_POST)) {
 
                 <!-- for category -->
                 <input type="hidden" value="<?= $category[0]['category_id'] ?>" id="category" name="category">
-                <!-- <div class="form-group mt-4">
-                    <label for="category" class="form-label">Category: <span style="color:red"><?= $errors['category'] ?? '' ?></span></label>
-                    <select class="form-control" id="category" name="category">
-                        <?php foreach ($category as $c) { ?>
-                            <option value="<?= $c['category_id'] ?>" <?= $data['category_name'] == $c['name'] ? 'selected' : '' ?>><?= $c['name'] ?></option>
-                        <?php } ?>
-                    </select>
-                </div> -->
+
                 <!-- for slug -->
-                <div class="form-group mt-4">
-                    <input type="hidden" name="slug" id="slug" value="<?= $data['slug'] ?>" class="form-control">
-                </div>
+                    <input type="hidden" name="slug" id="slug" value="<?= $data['product_slug'] ?>">
                 <!-- for price -->
                 <div class="form-group mt-4">
                     <label for="price" class="form-label">Price: <span style="color:red"><?= $errors['price'] ?? '' ?></span></label>

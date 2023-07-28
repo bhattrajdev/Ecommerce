@@ -99,3 +99,4 @@ $images = explode(',', $image);
             </div>
         </div>
     </div>
+</div>

@@ -340,63 +340,94 @@ if (isset($_POST)) {
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 <script>
-    const sessionData = <?php echo json_encode($_SESSION); ?>;
-    const totalAmountStr = sessionData.total;
-    const totalAmount = parseFloat(totalAmountStr);
-    const amountPaisa = totalAmount * 100;
-    const date_today = '<?= $current_date ?>';
-    const order_id = <?= $order_id ?>;
+    // const sessionData = <?php echo json_encode($_SESSION); ?>;
+    // const totalAmountStr = sessionData.total;
+    // const totalAmount = parseFloat(totalAmountStr);
+    // const amountPaisa = totalAmount * 100;
+    // const date_today = '<?= $current_date ?>';
+    // const order_id = <?= $order_id ?>;
 
-    var config = {
-        // replace the publicKey with yours
-        "publicKey": "test_public_key_2de166fa2c874f3faa716209e31f3882",
-        "productIdentity": "1234567890",
-        "productName": "Dragon",
-        "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
-        "paymentPreference": [
-            "KHALTI",
-            "EBANKING",
-            "MOBILE_BANKING",
-            "CONNECT_IPS",
-            "SCT",
-        ],
-        "eventHandler": {
-            onSuccess(payload) {
-                $.ajax({
-                    url: 'ajax.php',
-                    method: 'POST',
-                    data: {
-                        'token': payload.token, 
-                        'amount': 1000, 
-                        'order_id': order_id,
-                        'order_date': date_today,
-                        'is_paid': 1
-                    },
-                    success: function(responseData) {
-                        console.log('Success:', responseData);
-                           },
-                    error: function(xhr, status, error) {
-                        console.log('Error:', error);
-                       
-                    }
-                });
-            },
-            onError(error) {
-                console.log(error);
-            },
-            onClose() {
-                console.log('widget is closing');
-            }
-        }
-    };
+    // var config = {
+    //     // replace the publicKey with yours
+    //     "publicKey": "test_public_key_2de166fa2c874f3faa716209e31f3882",
+    //     "productIdentity": "1234567890",
+    //     "productName": "Dragon",
+    //     "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
+    //     "paymentPreference": [
+    //         "KHALTI",
+    //         "EBANKING",
+    //         "MOBILE_BANKING",
+    //         "CONNECT_IPS",
+    //         "SCT",
+    //     ],
+    //     "eventHandler": {
+    //         onSuccess(payload) {
+    //             $.ajax({
+    //                 url: 'ajax.php',
+    //                 method: 'POST',
+    //                 data: {
+    //                     'token': payload.token, 
+    //                     'amount': 1000, 
+    //                     'order_id': order_id,
+    //                     'order_date': date_today,
+    //                     'is_paid': 1
+    //                 },
+    //                 success: function(responseData) {
+    //                     console.log('Success:', responseData);
+    //                        },
+    //                 error: function(xhr, status, error) {
+    //                     console.log('Error:', error);
 
-    var checkout = new KhaltiCheckout(config);
+    //                 }
+    //             });
+    //         },
+    //         onError(error) {
+    //             console.log(error);
+    //         },
+    //         onClose() {
+    //             console.log('widget is closing');
+    //         }
+    //     }
+    // };
+
+    // var checkout = new KhaltiCheckout(config);
     var btn = document.getElementById("payment-button");
     btn.onclick = function() {
-   
+
         checkout.show({
             amount: 1000 
         });
     }
+
+    const data = {
+        return_url: "http://localhost:3000/payment",
+        website_url: "http://localhost:3000",
+        amount: 1000,
+        purchase_order_id: "test123",
+        purchase_order_name: "test",
+    };
+
+    await axios.post("/house/booking-confirm/", sendData).then((response) => {
+        if (type === 'confirm') {
+            axios.post('https://a.khalti.com/api/v2/epayment/initiate/', data, {
+                    headers: {
+                        'Authorization': 'Key 112ed1b55aee46498542a2527d686d55',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    const paymentURL = response.data.payment_url;
+                    window.location.replace(paymentURL);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+
+    }).catch((error) => {
+        console.log(error);
+    });
 </script>

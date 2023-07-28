@@ -90,7 +90,6 @@ if (!empty($_POST)) {
     $slug = $_POST['slug'];
     $price = $_POST['price'];
     $description = $_POST['description'];
-    $quantity = $_POST['quantity'];
     $discount = $_POST['discount'];
     $updateColor = $_POST['color'];
     $UpdateSize = $_POST['size'];
@@ -104,7 +103,6 @@ if (!empty($_POST)) {
         'slug' => $slug,
         'price' => $price,
         'description' => $description,
-        'quantity' => $quantity,
         'discount' => $discount,
     ];
     update('product', $productdata, "product_id=$product_id");
@@ -242,13 +240,8 @@ if (!empty($_POST)) {
             </div>
 
             <div class="col-md-4">
-                <!-- for quantity -->
-                <div class="form-group">
-                    <label for="quantity" class="form-label">Quantity: <span style="color:red"><?= $errors['quantity'] ?? '' ?></span></label>
-                    <input type="text" name="quantity" id="quantity" value="<?= $data['product_quantity'] ?>" class="form-control">
-                </div>
                 <!-- for discount -->
-                <div class="form-group mt-4">
+                <div class="form-group ">
                     <label for="discount" class="form-label">Discount: </label>
                     <input type="number" name="discount" id="discount" value="<?= $data['product_discount'] ?>" class="form-control">
                 </div>

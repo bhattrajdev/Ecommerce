@@ -1,8 +1,12 @@
 <?php
 
  
-   
-
+   if(isset($_SESSION['users_id'])){
+       $user_id = $_SESSION['users_id'];
+       $condition ="category . name = 'Used' and product . quantity > 0 and product . seller_id != $user_id";
+   }else{
+    $condition = "category . name = 'Used' and product . quantity > 0";
+   }
 
 $male = select(
     'product.product_id AS product_id,
@@ -68,7 +72,7 @@ $used = select(
     "JOIN brand ON product.brand_id = brand.brand_id 
      JOIN productgallery ON product.product_id = productgallery.product_id 
      JOIN category ON product.category_id = category.category_id
-     WHERE category.name = 'Used'
+     WHERE $condition
      GROUP BY product.product_id
      ORDER BY product.product_id DESC"
 );

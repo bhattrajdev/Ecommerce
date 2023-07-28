@@ -9,7 +9,8 @@ $size = select('*', 'size');
 $category = select('*', 'category', 'WHERE name = "used"');
 $brand = select('*', 'brand');
 
-
+$admin = select('*','admin');
+$adminmail = $admin[0]['email'];
 // for product validation
 
 $oldvalues = [
@@ -131,9 +132,20 @@ if (!empty($_POST)) {
                 'product_id' => $lastinsertedid,
                 'name' => $uploadedImages,
             ];
-
-
             insertImages('productgallery', $productgallery);
+            
+            $categoryname = select('name','category',"WHERE category_id =$category ");
+        
+            $productLink = url("productDetail.php?slug=$slug&category=$category&id=$lastinsertedid");
+    
+            // sending mail to admin for new uploaded product
+            $message = "Hello Admin,<br>
+            A new product has been uploaded by a seller.<br>
+
+            To visit the product <br>
+                $productLink
+            ";
+                phpmailer($adminmail, $message, "New product uploaded");
 
             // Set success message
             $_SESSION['message'] = [

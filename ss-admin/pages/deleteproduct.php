@@ -25,6 +25,5 @@ $_SESSION['message'] = [
     'message' => 'Product Deleted Successfully',
     'type' => 'success'
 ];
-header('Location: manageColor.php');
 // redirecting to the view product page
 header('Location:viewProduct.php');

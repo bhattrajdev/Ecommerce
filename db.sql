@@ -85,6 +85,7 @@ CREATE TABLE product (
 ADD seller_id INT AFTER product_id,
 ADD CONSTRAINT fk_seller_id FOREIGN KEY (seller_id) REFERENCES users(user_id);
 
+ALTER TABLE `product` CHANGE `quantity` `quantity` INT(11) NULL;
 
 
 -- for product variation

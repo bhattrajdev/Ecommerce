@@ -8,6 +8,8 @@ $output = select(
     address.email AS address_email, 
     address.phone AS address_phone,
     product.name AS product_name,
+    product.product_id AS product_id,
+    product.category_id AS product_category,
     color.name AS product_color,
     size.name AS product_size,
     orderproducts.quantity AS product_quantity,
@@ -40,6 +42,17 @@ $product_size = explode(',', $data['product_size']);
 
 // Separating product qunatity
 $product_quantity = explode(',', $data['product_quantity']);
+
+// checking logic if the item is used product or not
+
+$product_id = $data['product_id'];
+$sellerDetail  = select('*', 'product', "WHERE product_id = $product_id");
+
+$seller_id = $sellerDetail[0]['seller_id'];
+if ($seller_id != null) {
+    $query = select('*', 'users', "WHERE user_id =$seller_id ");
+}
+
 
 ?>
 
@@ -323,6 +336,28 @@ $product_quantity = explode(',', $data['product_quantity']);
             </div>
         </div>
     <?php } ?>
+    <?php if ($seller_id != null) { ?>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4>Seller Details</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 font-weight-bold">Name</div>
+                            <div class="col-md-8"><?= $query[0]['name'] ?></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 font-weight-bold">Email</div>
+                            <div class="col-md-8"><?= $query[0]['email'] ?></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <?php } ?>
 
     <!-- Orders Details Table -->
     <div class="card">
@@ -363,4 +398,6 @@ $product_quantity = explode(',', $data['product_quantity']);
             </table>
         </div>
     </div>
+
+
 </div>

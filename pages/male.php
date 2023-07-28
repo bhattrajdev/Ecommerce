@@ -111,16 +111,16 @@ $orderClause ORDER BY product.product_id DESC"
                             <div class="discount">
                                 <?php if ($data['product_discount'] > 0) { ?>
                                     <?= $data['product_discount']; ?>% off
-                        <?php } ?>
+                                <?php } ?>
+                            </div>
                         </div>
-                        </div>
-                
+
                     </a>
                 </div>
             <?php }
         } else { ?>
 
-            <h2 class="no_data_found">No Data Found</h2>
+            <h4 class="no_data_found" style="height: 50vh;">No Data Found</h4>
         <?php } ?>
     </div>
     </div>

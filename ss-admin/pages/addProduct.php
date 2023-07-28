@@ -15,7 +15,6 @@ $oldvalues = [
     'slug' => '',
     'price' => '',
     'description' => '',
-    'quantity' => '',
     'discount' => '',
     'color' => [],
     'size' => [],
@@ -28,7 +27,6 @@ $errors = [
     'slug' => '',
     'price' => '',
     'description' => '',
-    'quantity' => '',
     'images' => '',
     'color' => '',
     'size' => '',
@@ -72,7 +70,6 @@ if (!empty($_POST)) {
         $slug = $_POST['slug'];
         $price = $_POST['price'];
         $description = $_POST['description'];
-        $quantity = $_POST['quantity'];
         $discount = $_POST['discount'];
         $color = $_POST['color'];
         $size = $_POST['size'];
@@ -90,7 +87,6 @@ if (!empty($_POST)) {
             'slug' => $slug,
             'price' => $price,
             'description' => $description,
-            'quantity' => $quantity,
             'discount' => $discount,
         ];
         $lastinsertedid = insert('product', $productdata);
@@ -200,13 +196,9 @@ if (!empty($_POST)) {
             </div>
 
             <div class="col-md-4">
-                <!-- for quantity -->
-                <div class="form-group">
-                    <label for="quantity" class="form-label">Quantity: <span style="color:red"><?= $errors['quantity'] ?? '' ?></span></label>
-                    <input type="text" name="quantity" id="quantity" value="<?= $oldvalues['quantity'] ?>" class="form-control">
-                </div>
+               
                 <!-- for discount -->
-                <div class="form-group mt-4">
+                <div class="form-group ">
                     <label for="discount" class="form-label">Discount: </label>
                     <input type="number" name="discount" id="discount" value="<?= $oldvalues['discount'] ?>" class="form-control">
 

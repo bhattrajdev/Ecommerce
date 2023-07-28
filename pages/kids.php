@@ -119,7 +119,7 @@ $orderClause ORDER BY product.product_id DESC"
 <?php }
         } else { ?>
 
-<h2 class="no_data_found">No Data Found</h2>
+<h4 class="no_data_found" style="height: 50vh;">No Data Found</h4>
 <?php } ?>
 </div>
 </div>

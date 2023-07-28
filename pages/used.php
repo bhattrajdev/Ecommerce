@@ -2,12 +2,19 @@
 $brand = select('*', 'brand');
 $size = select('*', 'size');
 
+if (isset($_SESSION['users_id'])) {
+    $user_id = $_SESSION['users_id'];
+    $condition = "category . name = 'Used' and product . quantity > 0 and product . seller_id != $user_id";
+} else {
+    $condition = "category . name = 'Used' and product . quantity > 0";
+}
 $oldvalue = [
     'brand' => '',
     'size' => '',
     'price' => '',
 ];
-$whereClause = "category.name = 'Used'";
+// $whereClause = "category.name = 'Used'";
+$whereClause = $condition;
 
 if (!empty($_POST['brand'])) {
     $brandId = $_POST['brand'];
@@ -36,6 +43,7 @@ if (!empty($_POST['price'])) {
 $element = select(
     "product.discount AS product_discount,
 product.product_id AS product_id,
+product.seller_id AS seller_id,
 product.name AS product_name,
 product.price AS product_price,
 product.slug AS product_slug,
@@ -118,7 +126,7 @@ $orderClause"
             <?php }
         } else { ?>
 
-            <h2 class="no_data_found">No Data Found</h2>
+            <h2 class="no_data_found" style="height: 50vh;">No Data Found</h2>
         <?php } ?>
     </div>
     </div>

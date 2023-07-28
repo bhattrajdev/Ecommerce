@@ -4,17 +4,13 @@
           <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="offcanvasExample">
               <span class="navbar-toggler-icon" data-bs-target="#sidebar"></span>
           </button>
-          <a class="navbar-brand me-auto ms-lg-0 ms-3 text-uppercase fw-bold" href="<?= url('/ss-admin')?>"> <img src="<?= url('/public/images/Logo.png') ?>" width="20px" alt=""> Sneaker Station</a>
+          <a class="navbar-brand me-auto ms-lg-0 ms-3 text-uppercase fw-bold" href="<?= url('/ss-admin') ?>"> <img src="<?= url('/public/images/Logo.png') ?>" width="20px" alt=""> Sneaker Station</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavBar" aria-controls="topNavBar" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="topNavBar">
               <form class="d-flex ms-auto my-3 my-lg-0">
                   <div class="input-group">
-                      <input class="form-control" type="search" placeholder="Search" aria-label="Search" />
-                      <button class="btn btn-danger" type="submit">
-                          <i class="bi bi-search"></i>
-                      </button>
                   </div>
               </form>
               <ul class="navbar-nav">
@@ -171,10 +167,13 @@
                           </ul>
                       </div>
                   </li>
+                  <li class="my-1">
+                      <hr class="dropdown-divider bg-light" />
+                  </li>
                   <li>
-                      <a href="#" class="nav-link px-3">
-                          <span class="me-2"><i class="bi bi-layout-split"></i></span>
-                          <span>lorem</span>
+                      <a href="<?= url('ss-admin/viewUsers.php') ?>" class="nav-link px-3">
+                          <span class="me-2"><i class="fa-solid fa-users" style="color: #ffffff;"></i></span>
+                          <span>User Management</span>
                       </a>
                   </li>
               </ul>

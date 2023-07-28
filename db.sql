@@ -162,16 +162,3 @@ CREATE TABLE orderproducts(
 ALTER TABLE `orders` ADD `is_shipped` ENUM('0','1') NOT NULL DEFAULT '0' AFTER `is_accepted`;
 
 
--- create table seller
-
-CREATE TABLE seller(
-	seller_id int PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    product_id int,
-    FOREIGN KEY (product_id) REFERENCES product(product_id),
-    vendor_id int,
-    FOREIGN KEY (vendor_id) REFERENCES users(user_id),
-    sold_date varchar(100),
-    is_bought ENUM("0","1")DEFAULT '0',
-    buyer_id int, 
-    FOREIGN KEY (buyer_id) REFERENCES users(user_id)
-);

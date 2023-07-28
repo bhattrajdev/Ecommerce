@@ -28,7 +28,8 @@ if (isset($_GET['id']) && isset($_GET['name']) && $_GET['type'] === 'delete') {
                 'title' => 'Error',
                 'message' => 'The field cannot be empty',
                 'type' => 'error'
-            ];        } else {
+            ];
+        } else {
             // for update
             if (isset($_GET['name']) && isset($_GET['id']) && $_GET['type'] === 'update') {
                 $id = $_GET['id'];
@@ -76,13 +77,13 @@ if (isset($_GET['id']) && isset($_GET['name']) && $_GET['type'] === 'delete') {
                 // inserting into database
                 if (!$found) {
                     insert('brand', ['name' => $data]);
-               
+
                     $_SESSION['message'] = [
                         'title' => 'Success',
                         'message' => 'Brand Added successfully',
                         'type' => 'success'
                     ];
-                
+
                     header('Location: manageBrand.php');
                 }
             }

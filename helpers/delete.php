@@ -1,4 +1,4 @@
-<!-- delete from table where id = $id -->
+
 <?php
 function delete($tablename, $key, $id)
 {

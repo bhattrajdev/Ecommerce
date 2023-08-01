@@ -4,10 +4,11 @@ $data = select('*', 'orders', "WHERE user_id = $user_id ORDER BY order_id DESC")
 ?>
 
 <style>
-    .order{
+    .order {
         display: flex;
         justify-content: space-between;
     }
+
     table {
         width: 100%;
         border-collapse: collapse;
@@ -59,11 +60,15 @@ $data = select('*', 'orders', "WHERE user_id = $user_id ORDER BY order_id DESC")
 </style>
 
 <?php if (empty($data)) { ?>
-    <h4 class="no_data_found container mt-4" style="min-height:80vh;">No Data Found</h4>
+    <!-- <h4 class="no_data_found container mt-4" style="min-height:80vh;">No Data Found</h4> -->
+    <div class="container order mt-4" style="min-height:80vh; ">
+        <h4>No Data Found</h4>
+        <a href=" <?= url('saleshistory') ?>" class="sold_btn">SALES HISTORY</a>
+    </div>
 <?php } else { ?>
     <div class="container order" style="margin-top: 20px;">
         <h4>ORDER HISTORY</h4>
-       <a href="<?=url('saleshistory')?>" class="sold_btn">SALES HISTORY</a>
+        <a href="<?= url('saleshistory') ?>" class="sold_btn">SALES HISTORY</a>
     </div>
     <div class="container" style="min-height:80vh;">
         <table>
@@ -88,8 +93,8 @@ $data = select('*', 'orders', "WHERE user_id = $user_id ORDER BY order_id DESC")
                         if ($item['is_accepted'] == null) { ?>
                             <td class="order-status pending">Pending</td>
                             <?php } else {
-                          if ($item['is_accepted'] == 0) { ?>
-                                  <td class="order-status rejected">Rejected</td>
+                            if ($item['is_accepted'] == 0) { ?>
+                                <td class="order-status rejected">Rejected</td>
                                 <?php } else {
                                 if ($item['is_accepted'] == 1 && $item['is_shipped'] == 0) { ?>
                                     <td class="order-status accepted">Accepted</td>

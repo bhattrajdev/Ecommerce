@@ -2,8 +2,9 @@
 // getting id from the url
 $id = $_GET['id'];
 
-// delete product variation
+
 delete('productvariation','product_id',$id);
+delete('orderproducts','product_id',$id);
 
 // removing image from the storage
 $images = select('name','productgallery','WHERE product_id ='. $id);

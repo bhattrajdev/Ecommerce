@@ -7,17 +7,26 @@
             $productCount = ++$key;
         }
         $orderCount = 0;
-    $orders = select(
-    '*',
-    'orders',
-    "JOIN users ON orders.user_id = users.user_id
+        $orders = select(
+            '*',
+            'orders',
+            "JOIN users ON orders.user_id = users.user_id
     JOIN orderproducts ON orders.order_id = orderproducts.order_id
     JOIN product ON orderproducts.product_id = product.product_id 
     WHERE orders.is_accepted IS NULL AND product.seller_id IS NULL 
     ORDER BY orders.order_id DESC"
-                                                        );
+        );
         foreach ($orders as $key => $a) {
             $orderCount = ++$key;
+        }
+
+
+
+        // getting user count
+        $userCount = 0;
+        $users = select('*', 'users');
+        foreach ($users as $key => $a) {
+            $userCount = ++$key;
         }
         ?>
       <?php if ($orderCount > 0) { ?>
@@ -25,13 +34,13 @@
       <?php } ?>
       <div class="row">
           <div class="col-md-4">
-              <a href="#" class="a-disabled">
+              <a href="./viewUsers.php" class="a-disabled">
                   <div class="card dashboard-box">
                       <div class="icon mt-4 m-auto">
                           <i class="fa-solid fa-users"></i>
                           <span>Users</span>
                       </div>
-                      <div class="number mt-3  m-auto">10000+</div>
+                      <div class="number mt-3  m-auto"><?= $userCount ?></div>
                   </div>
               </a>
           </div>

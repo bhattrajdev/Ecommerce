@@ -172,8 +172,14 @@ if (!empty($_POST)) {
                     <label for="category" class="form-label">Category: <span style="color:red"><?= $errors['category'] ?? '' ?></span></label>
                     <select class="form-control" id="category" name="category">
                         <option selected disabled>---------------- Choose Category -----------------</option>
-                        <?php foreach ($category as $c) { ?>
-                            <option value="<?= $c['category_id'] ?>" <?= $oldvalues['category'] == $c['category_id'] ? 'selected' : '' ?>><?= $c['name'] ?></option>
+                        <?php foreach ($category as $c) {
+                            if ($c['name'] == 'used') {
+                            } else { ?>
+                                <option value="<?= $c['category_id'] ?>" <?= $oldvalues['category'] == $c['category_id'] ? 'selected' : '' ?>><?= $c['name'] ?></option>
+
+                            <?php } ?>
+
+
                         <?php } ?>
                     </select>
                 </div>
@@ -196,7 +202,7 @@ if (!empty($_POST)) {
             </div>
 
             <div class="col-md-4">
-               
+
                 <!-- for discount -->
                 <div class="form-group ">
                     <label for="discount" class="form-label">Discount: </label>

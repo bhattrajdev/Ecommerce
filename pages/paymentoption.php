@@ -341,19 +341,17 @@ if (isset($_POST)) {
     </div>
 </div>
 
+<!-- Script to handle Khalti payment -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
 
 <script>
-    const sessionData = <?php echo json_encode($_SESSION); ?>;
+    const sessionData = <?= json_encode($_SESSION) ?>;
     const totalAmountStr = sessionData.total;
     const totalAmount = parseFloat(totalAmountStr);
     const amountPaisa = totalAmount * 100;
     const date_today = '<?= $current_date ?>';
     const order_id = <?= $order_id ?>;
-
-
-
 
     var config = {
         // replace the publicKey with yours
@@ -370,40 +368,33 @@ if (isset($_POST)) {
         ],
         "eventHandler": {
             onSuccess(payload) {
-                $.ajax({
-                        url: 'http://localhost/SneakersStation/ajax.php',
-                        method: 'POST',
-                        data: {
-                            'token': payload.token,
-                            'amount': 1000,
-                            // 'order_id': order_id,
-                            // 'order_date': date_today,
-                            // 'is_paid': 1
-                        },
-                        dataType: "json",
-                        success: function(response) {
-                            if (response.success == 1) {
-                                window.location = response.redirecto;
-                            } else {
-                                checkout.hide();
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            console.log('Error:', error);
-
-                        }
-                    }).done(function(response) {
-                        console.log('AJAX success:', response);
+                // Handle successful payment here
+                axios.post('http://localhost/SneakersStation/ajax.php', {
+                        token: payload.token,
+                        amount: 1000,
+                        order_id: 123,
+                        order_date: 412,
+                        is_paid: 1
                     })
-                    .fail(function(xhr, status, error) {
-                        console.log('AJAX error:', error);
+                    .then(response => {
+                        if (response.data.success == 1) {
+                            window.location = response.data.redirecto;
+                        } else {
+                            // Handle error condition if needed
+                            console.error('Payment processing error:', response.data.error);
+                        }
+                    })
+                    .catch(error => {
+                        // Handle error condition if needed
+                        console.error('Payment processing error:', error);
                     });
             },
             onError(error) {
-                console.log(error);
+                // Handle payment error here
+                console.error('Payment error:', error);
             },
             onClose() {
-                console.log('widget is closing');
+                console.log('Payment widget is closing');
             }
         }
     };

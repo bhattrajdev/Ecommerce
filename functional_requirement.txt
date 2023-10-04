@@ -1,8 +1,9 @@
+
 User/Seller
 
 should allow users to register for an account and authenticate themselves securely to access the platform's features.
 
-should provide a search functionality that allows users to search for specific products by name, brand, or category.
+should provide a search functionality that allows users to search for specific products by name, brand, or price.
 
 should provide a catalog of available products, including detailed information about each item, such as price, size, color, and condition (new or used).
 
@@ -10,15 +11,9 @@ should provide a shopping cart functionality that allows users to add items to t
 
 should integrate with a payment gateway to allow users to securely pay for their purchases using their preferred payment method.
 
-gets notification for delivery status
+gets notification for order status
 
-should be able to sell products to the admin.
-
-gets notification for uploaded product
-
-
-
-
+should be able to sell his on shoes
 
 
 
@@ -34,15 +29,15 @@ should be able to give discount on products
 
 Should be able to add brand,category, color and sizes
 
-should be able to manage inventory of the products
-
-should be able to view order history
+should be able to get orders 
 
 gets notification when a user uploads a new product to sell
 
 approves/ rejects the products uploaded by the seller
 
 update product delivery status
+
+should be ale to view user adn their previous order history
 
 
 

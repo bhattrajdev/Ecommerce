@@ -1,16 +1,20 @@
 <?php
 $product_id = $_GET['id'];
 
-    $quantityfetch = select(
-        "product.quantity AS product_quantity",
-        "product",
-        "WHERE product.product_id = $product_id"
-    );
+    // $quantityfetch = select(
+    //     "product.quantity AS product_quantity",
+    //     "product",
+    //     "WHERE product.product_id = $product_id"
+    // );
 
-    // Accessing the 0th element of the array
-    $data = $quantityfetch[0];
-    $dbquantity = $data['product_quantity'];
+    // // Accessing the 0th element of the array
+    // $data = $quantityfetch[0];
+    // print_r($data);
+    // $dbquantity = $data['product_quantity'];
 
+    // echo $dbquantity;
+    // die();
+    
     // Add to cart and buy now
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!isset($_SESSION['name']) || !isset($_SESSION['email']) || !isset($_SESSION['users_id'])) {
@@ -61,7 +65,6 @@ $product_id = $_GET['id'];
                             'product_id' => $product_id,
                             'productvariation_id' => $productvariation_id,
                             'quantity' => $quantity,
-                            'max_quantity'=>$dbquantity,
                             'product_image' => $productimage,
                             'product_name' => $productname,
                             'product_price' => $productprice,

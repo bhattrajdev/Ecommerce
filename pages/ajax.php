@@ -1,4 +1,6 @@
 <?php
+echo $_POST;
+die();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (
         isset($_POST['token']) &&
@@ -18,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'amount' => $amount
         ));
 
-        $url = "https://khalti.com/api/v2/payment/verify/";
+        $url = "https://a.khalti.com/api/v2/epayment/initiate/";
 
         # Make the call using API.
         $ch = curl_init();
@@ -37,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $responseData = json_decode($response, true);
 
         // Check if the response is valid JSON
-        if ($responseData === null) {
+        if ($responseData === null || json_last_error() !== JSON_ERROR_NONE) {
             // Invalid JSON received
             error_log("Invalid JSON response: " . $response);
             echo "Invalid JSON response received from the API.";
@@ -55,9 +57,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $data = [
                 'payment_method' => $payment_method,
-                'is_paid' => '1',
+                'is_paid' => $isPaid,
                 'order_date' => $orderDate
             ];
+            // Assuming `update` is your custom function to update the order status
             update('orders', $data, "order_id = $order_id");
 
             // Display success message and redirect to index.php
@@ -87,4 +90,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Invalid request. Required data missing.";
         exit;
     }
+} else {
+    // Invalid request method
+    echo "Invalid request method.";
+    exit;
 }

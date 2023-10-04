@@ -49,7 +49,7 @@
               <a href="<?= url('ss-admin/viewProduct.php') ?>" class="a-disabled">
                   <div class="card dashboard-box">
                       <div class="icon mt-4  m-auto">
-                          <i class="fa-solid fa-users"></i>
+                          <i class="fa-solid fa-box"></i>
                           <span>Products</span>
                       </div>
                       <div class="number mt-3  m-auto"><?= $productCount ?></div>
@@ -61,8 +61,7 @@
               <a href="#" class="a-disabled">
                   <div class="card dashboard-box">
                       <div class="icon mt-4  m-auto">
-                          <i class="fa-solid fa-users"></i>
-                          <span>Sales</span>
+                          <i class="fa-solid fa-money-bill"></i> <span>Sales</span>
                       </div>
                       <div class="number mt-3  m-auto">10000+</div>
                   </div>

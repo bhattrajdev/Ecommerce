@@ -141,8 +141,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <section id="sign-up">
     <div class="form-box-signup">
-        
-        <?= $msg !=''?'<div class="msg alert alert-danger">'. $msg.'</div>':''?>
+
+        <?= $msg != '' ? '<div class="msg alert alert-danger">' . $msg . '</div>' : '' ?>
         <h3>Admin Login</h3>
         <form action="#" class="form" method="post">
             <div class="form-grp">

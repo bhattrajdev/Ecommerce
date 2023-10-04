@@ -18,39 +18,42 @@ if (!empty($_POST['brand'])) {
 if (!empty($_POST['Size'])) {
     $sizeId = $_POST['Size'];
     $oldvalue['size'] = $sizeId;
-
     $whereClause .= " AND productvariation.size_id = $sizeId";
 }
 
-$orderClause = "";
-if (!empty($_POST['price'])) {
-    $priceOrder = $_POST['price'];
-    $oldvalue['price'] = $priceOrder;
-    if ($priceOrder === "lowtohigh") {
-        $orderClause = "ORDER BY product.price ASC";
-    } elseif ($priceOrder === "hightolow") {
-        $orderClause = "ORDER BY product.price DESC";
-    }
-}
+        $orderClause = "";
+        if (!empty($_POST['price'])) {
+            $priceOrder = $_POST['price'];
+            $oldvalue['price'] = $priceOrder;
 
-$element = select(
-    "product.discount AS product_discount,
-product.product_id AS product_id,
-product.name AS product_name,
-product.price AS product_price,
-product.slug AS product_slug,
-brand.name AS brand_name,
-category.name AS category_name,
-GROUP_CONCAT(DISTINCT productgallery.name) AS images",
-    "product
-JOIN brand ON product.brand_id = brand.brand_id
-JOIN category ON product.category_id = category.category_id
-JOIN productvariation ON product.product_id = productvariation.product_id
-JOIN productgallery ON product.product_id = productgallery.product_id
-WHERE $whereClause
-GROUP BY product.product_id
-$orderClause ORDER BY product.product_id DESC"
-);
+            if ($priceOrder === "lowtohigh") {
+                $orderClause = "ORDER BY product.price ASC";
+            } elseif ($priceOrder === "hightolow") {
+                $orderClause = "ORDER BY product.price DESC";
+            }
+        }
+
+        $element = select(
+            "product.discount AS product_discount,
+    product.product_id AS product_id,
+    product.name AS product_name,
+    product.price AS product_price,
+    product.slug AS product_slug,
+    brand.name AS brand_name,
+    category.name AS category_name,
+    GROUP_CONCAT(DISTINCT productgallery.name) AS images",
+            "product
+    JOIN brand ON product.brand_id = brand.brand_id
+    JOIN category ON product.category_id = category.category_id
+    JOIN productvariation ON product.product_id = productvariation.product_id
+    JOIN productgallery ON product.product_id = productgallery.product_id
+    WHERE $whereClause
+    GROUP BY product.product_id
+    $orderClause"
+        );
+
+
+
 
 
 ?>

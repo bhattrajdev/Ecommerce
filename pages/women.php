@@ -48,7 +48,7 @@ JOIN category ON product.category_id = category.category_id
 JOIN productvariation ON product.product_id = productvariation.product_id
 JOIN productgallery ON product.product_id = productgallery.product_id
 WHERE $whereClause
-GROUP BY product.product_id $orderClause ORDER BY product.product_id DESC"
+GROUP BY product.product_id $orderClause"
 );
 
 

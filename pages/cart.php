@@ -1,9 +1,8 @@
 <?php
 if (!isset($_SESSION['name']) && !isset($_SESSION['email']) && !isset($_SESSION['users_id'])) {
-    header('location:login.php');
+    header('location: login.php');
     exit();
 } else {
-
     if (isset($_POST['remove'])) {
         $id = $_POST['remove'];
         foreach ($_SESSION['cartdata'] as $index => $cartItem) {
@@ -12,7 +11,7 @@ if (!isset($_SESSION['name']) && !isset($_SESSION['email']) && !isset($_SESSION[
                 break;
             }
         }
-        header('Location:cart.php');
+        header('Location: cart.php');
         $_SESSION['message'] = [
             'title' => 'Success',
             'message' => 'Product Successfully Removed From Cart',
@@ -21,7 +20,7 @@ if (!isset($_SESSION['name']) && !isset($_SESSION['email']) && !isset($_SESSION[
     }
     if (isset($_POST['checkout'])) {
         $_SESSION['total'] = $_POST['total'];
-        header('Location:checkout.php');
+        header('Location: checkout.php');
     }
 
     // Handle quantity update
@@ -30,10 +29,10 @@ if (!isset($_SESSION['name']) && !isset($_SESSION['email']) && !isset($_SESSION[
         $action = $_POST['action'];
 
         if ($action === 'increase') {
-            {
+            if ($_SESSION['cartdata'][$index]['max_quantity'] === null || $_SESSION['cartdata'][$index]['quantity'] < $_SESSION['cartdata'][$index]['max_quantity']) {
                 $_SESSION['cartdata'][$index]['quantity']++;
             }
-        } elseif ($action === 'decrease') {
+        } elseif ($action === 'decrease' && $_SESSION['cartdata'][$index]['quantity'] > 1) {
             $_SESSION['cartdata'][$index]['quantity']--;
         }
     }
@@ -79,9 +78,9 @@ $subTotal = 0;
                                 <input type="hidden" name="index" value="<?= $index ?>">
                                 <button class="quantity-btn decrease" name="action" value="decrease" <?php if ($cartItem['quantity'] <= 1) echo 'disabled'; ?>>-</button>
                                 <span class="quantity-value"><?= $cartItem['quantity'] ?></span>
-                               
+                                <?php if ($cartItem['max_quantity'] === null || $cartItem['quantity'] < $cartItem['max_quantity']) { ?>
                                     <button class="quantity-btn increase" name="action" value="increase">+</button>
-                               
+                                <?php } ?>
                             </form>
                         </div>
                         <div class="product-line-price"><?= $cartItem['product_price'] * $cartItem['quantity'] ?></div>

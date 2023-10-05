@@ -13,6 +13,10 @@ require './components/message.php';
 require '../helpers/phpmailer.php';
 require '../vendor/autoload.php';
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+
 if (isset($_SESSION['email']) && isset($_SESSION['is_admin'])) {
 
     $requesturi = isset($_GET['uri']) ? $_GET['uri'] : 'index';

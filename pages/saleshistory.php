@@ -105,6 +105,8 @@ $data = select('*', 'product', "WHERE seller_id = $user_id");
                     $data2 = select('*', 'orders', "JOIN orderproducts ON orderproducts.order_id = orders.order_id 
             JOIN product ON product.product_id = orderproducts.product_id 
             WHERE orderproducts.product_id = " . $item['product_id']);
+
+
                     ?>
 
                     <tr>
@@ -113,10 +115,10 @@ $data = select('*', 'product', "WHERE seller_id = $user_id");
                         <td>RS <?= $item['price'] ?></td>
                         <td>
                             <a href="sellerproductdetail?id=<?= $item['product_id'] ?>"><button class="btn btn-success"> <i class="fa-solid fa-eye"></i> View</button></a>
-                            <?php if(empty($data2)){?> 
-                            <a href="editsellerproduct?id=<?= $item['product_id'] ?>"><button class="btn btn-primary"> <i class="fa-solid fa-eye"></i> Edit</button></a>
-                            <a href="deletesellerproduct?id=<?= $item['product_id'] ?>"><button class="btn btn-danger"> <i class="fa-solid fa-eye"></i> Delete</button></a>
-                            <?php }?>
+                            <?php if (empty($data2)) { ?>
+                                <a href="editsellerproduct?id=<?= $item['product_id'] ?>"><button class="btn btn-primary"> <i class="fa-solid fa-eye"></i> Edit</button></a>
+                                <a href="deletesellerproduct?id=<?= $item['product_id'] ?>"><button class="btn btn-danger"> <i class="fa-solid fa-eye"></i> Delete</button></a>
+                            <?php } ?>
                         </td>
                         <td>
                             <?php if (!empty($data2)) { ?>

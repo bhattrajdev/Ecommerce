@@ -1,37 +1,35 @@
 <?php
 $product_id = $_GET['id'];
 
-    // $quantityfetch = select(
-    //     "product.quantity AS product_quantity",
-    //     "product",
-    //     "WHERE product.product_id = $product_id"
-    // );
+$quantityfetch = select(
+    "product.quantity AS product_quantity",
+    "product",
+    "WHERE product.product_id = $product_id"
+);
 
-    // // Accessing the 0th element of the array
-    // $data = $quantityfetch[0];
-    // print_r($data);
-    // $dbquantity = $data['product_quantity'];
+// Accessing the 0th element of the array
+$data = $quantityfetch[0];
+print_r($data);
+$dbquantity = $data['product_quantity'];
 
-    // echo $dbquantity;
-    // die();
-    
-    // Add to cart and buy now
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (!isset($_SESSION['name']) || !isset($_SESSION['email']) || !isset($_SESSION['users_id'])) {
-            header('Location: login.php');
-            exit();
-        }
 
-        $user_id = $_SESSION['users_id'];
-        $quantity = $_POST['quantity'];
-        $size = $_POST['size'];
-        $color = $_POST['color'];
-        $productname = $_POST['productname'];
-        $productprice = $_POST['productprice'];
-        $productimage = $_POST['singleimage'];
-        $productvariation_id = '';
+// Add to cart and buy now
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_SESSION['name']) || !isset($_SESSION['email']) || !isset($_SESSION['users_id'])) {
+        header('Location: login.php');
+        exit();
+    }
 
-    if ($dbquantity === null || $dbquantity >= $quantity || $quantity == null) {        
+    $user_id = $_SESSION['users_id'];
+    $quantity = $_POST['quantity'];
+    $size = $_POST['size'];
+    $color = $_POST['color'];
+    $productname = $_POST['productname'];
+    $productprice = $_POST['productprice'];
+    $productimage = $_POST['singleimage'];
+    $productvariation_id = '';
+
+    if ($dbquantity === null || $dbquantity >= $quantity || $quantity == null) {
         if (!empty($size) && !empty($color)) {
 
             if (isset($_POST['add_to_cart'])) {
@@ -58,13 +56,14 @@ $product_id = $_GET['id'];
                             'message' => 'The product already exists in the cart with the same size and color.',
                             'type' => 'error'
                         ];
-                            header("Refresh:0");
+                        header("Refresh:0");
                     } else {
                         $cartData = [
                             'user_id' => $user_id,
                             'product_id' => $product_id,
                             'productvariation_id' => $productvariation_id,
                             'quantity' => $quantity,
+                            'max_quantity' => $dbquantity,
                             'product_image' => $productimage,
                             'product_name' => $productname,
                             'product_price' => $productprice,
@@ -77,8 +76,7 @@ $product_id = $_GET['id'];
                             'message' => 'Product successfully added to the cart.',
                             'type' => 'success'
                         ];
-                            header("Refresh:0");
-
+                        header("Refresh:0");
                     }
                 } else {
                     $_SESSION['message'] = [
@@ -86,7 +84,7 @@ $product_id = $_GET['id'];
                         'message' => 'No matching product variation found.',
                         'type' => 'error'
                     ];
-                        header("Refresh:0");
+                    header("Refresh:0");
                 }
             } elseif (isset($_POST['buy_now'])) {
                 if ($productvariation_id === NULL) {
@@ -100,7 +98,7 @@ $product_id = $_GET['id'];
                             'message' => 'No matching product variation found.',
                             'type' => 'error'
                         ];
-                            header("Refresh:0");
+                        header("Refresh:0");
                     }
                 }
 
@@ -129,8 +127,8 @@ $product_id = $_GET['id'];
                 'message' => 'Please select the desired size and color.',
                 'type' => 'error'
             ];
-        header("Refresh:0");
-    }
+            header("Refresh:0");
+        }
     } else {
         $_SESSION['message'] = [
             'title' => 'Error',

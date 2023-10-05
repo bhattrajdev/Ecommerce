@@ -28,7 +28,7 @@ if (isset($_POST)) {
 ?>
 
 <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js" integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style>
     .data {
         display: block;
@@ -329,20 +329,17 @@ if (isset($_POST)) {
             <div class="card-header py-3">
                 <h4>Payment Option</h4>
             </div>
-
             <div class="button_grp">
                 <form action="#" method="post">
                     <button class="buttons cod" name="cod" type="submit">Cash On Delivery</button>
                 </form>
                 <button id="payment-button" style="background:white;"><img src="<?= url('public/images/khalti.jpg') ?>"></button>
             </div>
-
         </div>
     </div>
 </div>
 
 <!-- Script to handle Khalti payment -->
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
 
 <script>
@@ -354,11 +351,11 @@ if (isset($_POST)) {
     const order_id = <?= $order_id ?>;
 
     var config = {
-        // replace the publicKey with yours
-        "publicKey": "test_public_key_2de166fa2c874f3faa716209e31f3882",
-        "productIdentity": "1234567890",
+        "publicKey": "test_public_key_2de166fa2c874f3faa716209e31f3882", // Replace with your Khalti public key
+        "productIdentity": order_id.toString(),
         "productName": "Dragon",
         "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
+        "amount": 1000,
         "paymentPreference": [
             "KHALTI",
             "EBANKING",
@@ -368,42 +365,39 @@ if (isset($_POST)) {
         ],
         "eventHandler": {
             onSuccess(payload) {
-                // Handle successful payment here
-                axios.post('http://localhost/SneakersStation/ajax.php', {
-                        token: payload.token,
-                        amount: 1000,
-                        order_id: 123,
-                        order_date: 412,
-                        is_paid: 1
+
+                const data = {
+                    "token": payload.token,
+                    "amount": totalAmount,
+                    "order_id": order_id,
+                    "order_date": '<?= $current_date ?>',
+                    "is_paid": 1
+                }
+                console.log(payload.token, totalAmount, order_id, '<?= $current_date ?>', 1);
+
+                axios({
+                        method: "post",
+                        url: "http://localhost/SneakersStation/demo/",
+                        data: data,
+                        headers: {
+                            "Content-Type": "multipart/form-data"
+                        },
                     })
-                    .then(response => {
-                        if (response.data.success == 1) {
-                            window.location = response.data.redirecto;
-                        } else {
-                            // Handle error condition if needed
-                            console.error('Payment processing error:', response.data.error);
-                        }
+                    .then(function(response) {
+                        //handle success 
+                        console.log(response);
                     })
-                    .catch(error => {
-                        // Handle error condition if needed
-                        console.error('Payment processing error:', error);
+                    .catch(function(response) {
+                        //handle error
+                        console.log(response);
                     });
-            },
-            onError(error) {
-                // Handle payment error here
-                console.error('Payment error:', error);
-            },
-            onClose() {
-                console.log('Payment widget is closing');
             }
         }
-    };
+    }
 
     var checkout = new KhaltiCheckout(config);
     var btn = document.getElementById("payment-button");
     btn.onclick = function() {
-        checkout.show({
-            amount: 1000
-        });
+        checkout.show();
     }
 </script>

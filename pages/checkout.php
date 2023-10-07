@@ -120,7 +120,6 @@ if (!isset($_SESSION['name']) && !isset($_SESSION['email']) && !isset($_SESSION[
                     'total' =>$total
                 ];
                 $last_inserted_id = insert('orders',$data);
-
                 // getting cart data and inserting it into product order 
                 
                 $cartdata = $_SESSION['cartdata'];
@@ -134,6 +133,9 @@ if (!isset($_SESSION['name']) && !isset($_SESSION['email']) && !isset($_SESSION[
                         'productvariation_id' => $productvariation_id,
                         'quantity'=>$quantity,
                     );
+
+
+                   
                     insert('orderproducts', $order_product_data);
                 }
                 $_SESSION['order_id'] = $last_inserted_id;

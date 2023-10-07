@@ -63,7 +63,7 @@
                       <div class="icon mt-4  m-auto">
                           <i class="fa-solid fa-money-bill"></i> <span>Sales</span>
                       </div>
-                      <div class="number mt-3  m-auto">10000+</div>
+                      <div class="number mt-3  m-auto">852</div>
                   </div>
               </a>
           </div>

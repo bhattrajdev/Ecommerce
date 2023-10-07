@@ -7,6 +7,8 @@ $address = $_SESSION['selected_address_id'];
 $data = select('*', 'address', "WHERE address_id =" . $_SESSION['selected_address_id']);
 $address = $data[0];
 $order_id = $_SESSION['order_id'];
+
+
 if (isset($_POST)) {
 
     if (isset($_POST['cod'])) {
@@ -332,6 +334,8 @@ if (isset($_POST)) {
             <div class="button_grp">
                 <form action="#" method="post">
                     <button class="buttons cod" name="cod" type="submit">Cash On Delivery</button>
+                    <!-- <button class="buttons cod" id="payment-button" name="khalti" style="background:white;"><img src="<?= url('public/images/khalti.jpg') ?>" width="150px"></button> -->
+
                 </form>
                 <button id="payment-button" style="background:white;"><img src="<?= url('public/images/khalti.jpg') ?>"></button>
             </div>
@@ -339,65 +343,35 @@ if (isset($_POST)) {
     </div>
 </div>
 
-<!-- Script to handle Khalti payment -->
 <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
 
 <script>
-    const sessionData = <?= json_encode($_SESSION) ?>;
-    const totalAmountStr = sessionData.total;
-    const totalAmount = parseFloat(totalAmountStr);
-    const amountPaisa = totalAmount * 100;
-    const date_today = '<?= $current_date ?>';
-    const order_id = <?= $order_id ?>;
+    const data = {
+        return_url: "http://localhost:3000/payment",
+        website_url: "http://localhost:3000",
+        amount: 1000,
+        purchase_order_id: "test123",
+        purchase_order_name: "test",
+    };
 
-    var config = {
-        "publicKey": "test_public_key_2de166fa2c874f3faa716209e31f3882", // Replace with your Khalti public key
-        "productIdentity": order_id.toString(),
-        "productName": "Dragon",
-        "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
-        "amount": 1000,
-        "paymentPreference": [
-            "KHALTI",
-            "EBANKING",
-            "MOBILE_BANKING",
-            "CONNECT_IPS",
-            "SCT",
-        ],
-        "eventHandler": {
-            onSuccess(payload) {
-
-                const data = {
-                    "token": payload.token,
-                    "amount": totalAmount,
-                    "order_id": order_id,
-                    "order_date": '<?= $current_date ?>',
-                    "is_paid": 1
-                }
-                console.log(payload.token, totalAmount, order_id, '<?= $current_date ?>', 1);
-
-                axios({
-                        method: "post",
-                        url: "http://localhost/SneakersStation/demo/",
-                        data: data,
-                        headers: {
-                            "Content-Type": "multipart/form-data"
-                        },
-                    })
-                    .then(function(response) {
-                        //handle success 
-                        console.log(response);
-                    })
-                    .catch(function(response) {
-                        //handle error
-                        console.log(response);
-                    });
-            }
+    await api.post("/house/booking-confirm/", sendData).then((response) => {
+        if (type === 'confirm') {
+            axios.post('https://a.khalti.com/api/v2/epayment/initiate/', data, {
+                    headers: {
+                        'Authorization': 'Key 799d17e01c6e4399b81b884833819810',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    const paymentURL = response.data.payment_url;
+                    window.location.replace(paymentURL);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
-    }
 
-    var checkout = new KhaltiCheckout(config);
-    var btn = document.getElementById("payment-button");
-    btn.onclick = function() {
-        checkout.show();
-    }
+    }).catch((error) => {
+        console.log(error);
+    });
 </script>

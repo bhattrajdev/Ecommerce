@@ -3,6 +3,8 @@ $user_id = $_SESSION['users_id'];
 $product_id = $_GET['id'];
 $detalis = select('*', 'product', "WHERE product_id = $product_id");
 
+
+
 $element = select(
     ' users.name AS user_name,
     product.name AS product_name,
@@ -28,9 +30,10 @@ JOIN users ON users.user_id = orders.user_id
 JOIN address ON address.address_id = orders.address_id
 WHERE orderproducts.product_id = $product_id ORDER BY order_id DESC"
 );
-if (!empty($element)) {
-    $data = $element[0];
-}
+
+$data = $element[0];
+
+
 
 
 
@@ -270,9 +273,9 @@ The SneakerStation Team";
                         <td><?= $item['is_paid'] == 0 ? 'Pending' : 'Done' ?></td>
                         <td>
                             <?php
-                            if ($item['is_accepted'] == '') {
+                            if ($item['is_accepted'] == '' && $detalis[0]['quantity'] > 0) {
                                 echo "<span class='order-status shipped'>pending</span>";
-                            } elseif ($item['is_accepted'] === 0) {
+                            } elseif ($item['is_accepted'] == 0) {
                                 echo "<span class='order-status shipped'>rejected</span>";
                             } elseif ($item['is_accepted'] == 1 && $item['is_shipped'] == 0) {
                                 echo "<span class='order-status shipped'>accepted</span>";
@@ -280,21 +283,24 @@ The SneakerStation Team";
                                 echo "<span class='order-status shipped'>shipped</span>";
                             } elseif ($item['is_delivered'] == 1 && $item['delivery_date'] != null) {
                                 echo "<span class='order-status shipped'>delivered</span>";
-                            }
-                            ?>
+                            } elseif ($item['is_accepted'] == '' && $detalis[0]['quantity'] == 0) {
+                                echo "<span class='order-status shipped'>rejected</span>";
+                            } ?>
+
                         </td>
                         <td> <a href="viewRequests.php?id=<?= $item['order_id'] ?>"><Button class="btn btn-success"><i class="fa-solid fa-eye"></i> View</Button></a></td>
                         <td>
                             <form method="post" action="#">
                                 <input type="hidden" value="<?= $item['order_id'] ?>" name="order_id">
-                                <?php if ($item['order_id'] !== null && $item['is_accepted'] == '') { ?>
+                                <?php if ($item['order_id'] !== null && $item['is_accepted'] == '' && $data['total_quantity'] > 0) { ?>
                                     <button class="btn btn-success" name="accept">Accept</button>
                                     <button class="btn btn-danger" name="reject">Reject</button>
                                 <?php } elseif ($item['is_accepted'] == 1 && $item['is_shipped'] == 0) { ?>
                                     <button class="btn btn-success" name="markedasshipped">Mark as shipped</button>
                                 <?php } elseif ($item['is_shipped'] == 1 && $item['is_delivered'] == 0) { ?>
                                     <button class="btn btn-success" name="markedasdelivered">Mark as delivered</button>
-                                <?php } ?>
+                                <?php } elseif ($data['total_quantity'] == 0) {
+                                } ?>
                             </form>
                         </td>
                     </tr>

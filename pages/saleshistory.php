@@ -1,26 +1,7 @@
 <?php
 $user_id = $_SESSION['users_id'];
 
-// $data = select(
-//     "product.product_id AS product_id, product.name AS product_name,
-//     product.price AS product_price, brand.name AS brand_name, category.name AS category_name,
-//     orderproducts.ordersproducts_id AS ordersproducts_id, orderproducts.order_id AS order_id,
-//     orderproducts.productvariation_id AS productvariation_id,
-//     orders.order_date AS order_date, orders.total AS total,
-//     orders.is_accepted AS is_accepted, orders.is_shipped AS is_shipped,
-//     orders.address_id AS address_id,
-//     orders.is_paid AS is_paid, orders.is_delivered AS is_delivered,
-//     orders.delivery_date AS delivery_date",
-//     "product LEFT JOIN brand ON product.brand_id = brand.brand_id 
-//     LEFT JOIN category ON product.category_id = category.category_id
-//     LEFT JOIN orderproducts ON product.product_id = orderproducts.product_id
-//     LEFT JOIN orders ON orderproducts.order_id = orders.order_id
-//     WHERE product.seller_id = $user_id
-//     ORDER BY product.product_id DESC"
-// );
-
 $data = select('*', 'product', "WHERE seller_id = $user_id");
-
 
 ?>
 <style>
@@ -101,12 +82,10 @@ $data = select('*', 'product', "WHERE seller_id = $user_id");
             <tbody>
                 <?php foreach ($data as $key => $item) { ?>
                     <?php
-                    // Now, for each product ID, retrieve data from the 'orders' table.
                     $data2 = select('*', 'orders', "JOIN orderproducts ON orderproducts.order_id = orders.order_id 
             JOIN product ON product.product_id = orderproducts.product_id 
             WHERE orderproducts.product_id = " . $item['product_id']);
-
-
+                
                     ?>
 
                     <tr>

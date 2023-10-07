@@ -9,9 +9,7 @@ $quantityfetch = select(
 
 // Accessing the 0th element of the array
 $data = $quantityfetch[0];
-print_r($data);
 $dbquantity = $data['product_quantity'];
-
 
 // Add to cart and buy now
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -87,22 +85,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     header("Refresh:0");
                 }
             } elseif (isset($_POST['buy_now'])) {
-                if ($productvariation_id === NULL) {
-                    // If the $productvariation_id is still NULL, try to find it again.
-                    $data = select('*', 'productvariation', "WHERE product_id = $product_id AND color_id = $color AND size_id = $size");
-                    if (!empty($data)) {
-                        $productvariation_id = $data[0]['productvariation_id'];
-                    } else {
-                        $_SESSION['message'] = [
-                            'title' => 'Error',
-                            'message' => 'No matching product variation found.',
-                            'type' => 'error'
-                        ];
-                        header("Refresh:0");
-                    }
+                // Fetch product variation ID again
+                $productvariation_data = select('*', 'productvariation', "WHERE product_id = $product_id AND color_id = $color AND size_id = $size");
+
+                if (!empty($productvariation_data)) {
+                    $productvariation_id = $productvariation_data[0]['productvariation_id'];
+                } else {
+                    $_SESSION['message'] = [
+                        'title' => 'Error',
+                        'message' => 'No matching product variation found.',
+                        'type' => 'error'
+                    ];
+                    header("Location: product_page.php?id=$product_id"); // Redirect back to the product page
+                    exit();
                 }
 
-                if ($productvariation_id !== NULL) {
+                if ($productvariation_id !== null) {
                     $total = $productprice + ($productprice * 12) / 100 + 200;
                     $_SESSION['total'] = $total;
                     $cartData = [
@@ -115,12 +113,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'product_price' => $productprice,
                     ];
 
-                    // store the data in session
+
+                    // Store the data in session
                     $_SESSION['cartdata'][] = $cartData;
 
-                    header('Location:checkout.php');
+                    header('Location: checkout.php');
+                    exit();
                 }
             }
+            
         } else {
             $_SESSION['message'] = [
                 'title' => 'Error',

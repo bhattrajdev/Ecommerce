@@ -117,7 +117,7 @@ GROUP BY product.product_id $orderClause"
             <?php }
         } else { ?>
 
-            <h4 class="no_data_found">No Data Found</h4>
+            <h4 class="no_data_found" style="height: 50vh;">No Data Found</h4>
         <?php } ?>
     </div>
     </div>

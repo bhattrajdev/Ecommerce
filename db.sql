@@ -81,6 +81,7 @@ CREATE TABLE product (
     discount int,
    	description varchar(255)
     );
+    
     ALTER TABLE product
 ADD seller_id INT AFTER product_id,
 ADD CONSTRAINT fk_seller_id FOREIGN KEY (seller_id) REFERENCES users(user_id);

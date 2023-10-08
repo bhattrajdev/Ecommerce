@@ -1,25 +1,36 @@
 <?php
-header('Content-Type: application/json');
+$curl = curl_init();
+curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://khalti.com/api/v2/epayment/initiate/',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => '',
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_POSTFIELDS => '{
+    "return_url": "http://localhost/SneakersStation/",
+    "website_url": "http://localhost/SneakersStation/",
+    "amount": "1000",
+    "purchase_order_id": "Order01",
+        "purchase_order_name": "test",
 
-if (isset($_POST['token'])) {
-    // Your processing logic here...
+    "customer_info": {
+        "name": "Test Bahadur",
+        "email": "test@khalti.com",
+        "phone": "9800000001"
+    }
+    }
 
-    $responseData = array(
-        'token' => 'hhTS2q53dVVAmCGpWqvKDS',
-        'amount' => 333.28,
-        'order_id' => 3,
-        'order_date' => '23-10-05',
-        'is_paid' => 1
-    );
+    ',
+    CURLOPT_HTTPHEADER => array(
+        'Authorization:key test_secret_key_112ed1b55aee46498542a2527d686d55',
+        'Content-Type: application/json',
+    ),
+));
 
-    
-    echo json_encode($responseData);
-    exit;
-} else {
-    $responseData = array(
-        'error' => 'Data not found'
-    );
+$response = curl_exec($curl);
 
-    echo json_encode($responseData);
-    exit;
-}
+curl_close($curl);
+echo $response;

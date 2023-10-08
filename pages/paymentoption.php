@@ -337,13 +337,30 @@ if (isset($_POST)) {
                     <!-- <button class="buttons cod" id="payment-button" name="khalti" style="background:white;"><img src="<?= url('public/images/khalti.jpg') ?>" width="150px"></button> -->
 
                 </form>
-                <button id="payment-button" style="background:white;"><img src="<?= url('public/images/khalti.jpg') ?>"></button>
+
+                <form action="https://uat.esewa.com.np/epay/main" method="POST">
+                    <input value="<?= $_SESSION['total'] ?>" name="tAmt" type="hidden">
+                    <input value="<?= $_SESSION['total'] ?>" name="amt" type="hidden">
+                    <input value="0" name="txAmt" type="hidden">
+                    <input value="0" name="psc" type="hidden">
+                    <input value="0" name="pdc" type="hidden">
+                    <input value="EPAYTEST" name="scd" type="hidden">
+                    <input value="123456" name="pid" type="hidden">
+                    <input value="http://localhost/SneakersStation/success.php?q=su" type="hidden" name="su">
+                    <input value="http://localhost/SneakersStation/failure.php?q=fu" type="hidden" name="fu">
+                    <!-- <input value="Submit" type="submit"> -->
+                    <button class=" btn-sm my-1" type="submit"><img src="<?= url('public/images/R.jpeg') ?> " height="70px"></img></button>
+                    </a>
+
+                    <br>
+                </form>
+                <!-- <button id="payment-button" style="background:white;"><img src="<?= url('public/images/khalti.jpg') ?>"></button> -->
             </div>
         </div>
     </div>
 </div>
 
-<script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
+<!-- <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
 
 <script>
     const data = {
@@ -374,4 +391,4 @@ if (isset($_POST)) {
     }).catch((error) => {
         console.log(error);
     });
-</script>
+</script> -->

@@ -1,6 +1,5 @@
 <?php
 
- 
    if(isset($_SESSION['users_id'])){
        $user_id = $_SESSION['users_id'];
        $condition ="category . name = 'Used' and product . quantity > 0 and product . seller_id != $user_id";

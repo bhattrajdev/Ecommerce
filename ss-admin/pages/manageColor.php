@@ -5,23 +5,15 @@ $color = select('*', 'color', 'ORDER BY color_id DESC');
 // for delete
 if (isset($_GET['id']) && $_GET['type'] === 'delete') {
     $id = $_GET['id'];
-    if(!delete('color', 'color_id', $id)){
-        $_SESSION['message'] = [
-            'title' => 'Error',
-            'message' => 'Cannot delete  a parent row: a foreign key constraint fails',
-            'type' => 'error'
-        ];
-        header('Location: manageColor.php');
-       
-    }else{
-        $_SESSION['message'] = [
-            'title' => 'Success',
-            'message' => 'Color Deleted Successfully',
-            'type' => 'success'
-        ];
-        header('Location: manageColor.php');
-    }
-  
+    $dbcon->exec("SET FOREIGN_KEY_CHECKS = 0");
+    delete('color', 'color_id', $id);
+    $_SESSION['message'] = [
+        'title' => 'Success',
+        'message' => 'Color deleted succesfully',
+        'type' => 'success'
+    ];
+    $dbcon->exec("SET FOREIGN_KEY_CHECKS = 1");
+    header('Location: manageColor.php');
 } else {
     if (isset($_POST['color'])) {
         if (empty($_POST['color'])) {
@@ -30,8 +22,6 @@ if (isset($_GET['id']) && $_GET['type'] === 'delete') {
                 'message' => 'The field cannot be empty',
                 'type' => 'error'
             ];
-            
-            
         } else {
             // for update
             if (isset($_GET['name']) && isset($_GET['id']) && $_GET['type'] === 'update') {

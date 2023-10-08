@@ -14,10 +14,13 @@ require './vendor/autoload.php';
 
 // frontend routes
 $requesturi = isset($_GET['uri']) ? $_GET['uri'] : 'index';
+
 $requesturi = str_replace('.php', '', $requesturi);
 $title = $requesturi;
 $requesturi = $requesturi . '.php';
+
 $pagepath = __DIR__ . '/pages/' . $requesturi;
+
 require "components/header.php";
 require 'ss-admin/components/message.php';
 

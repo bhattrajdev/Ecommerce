@@ -5,21 +5,22 @@ $size = select('*', 'size', 'ORDER BY size_id DESC');
 // for delete
 if (isset($_GET['id']) && $_GET['type'] === 'delete') {
     $id = $_GET['id'];
-    if(delete('size', 'size_id', $id)){
-        $_SESSION['message'] = [
-            'title' => 'Success',
-            'message' => 'Size Deleted Successfully',
-            'type' => 'success'
-        ];
+
+    $dbcon->exec("SET FOREIGN_KEY_CHECKS = 0");
+    delete('size', 'size_id', $id);
+
+    $dbcon->exec("SET FOREIGN_KEY_CHECKS = 1");
+
+    $_SESSION['message'] = [
+        'title' => 'Success',
+        'message' => 'Size Deleted Successfully',
+        'type' => 'success'
+    ];
     header('Location: manageSize.php');
-    }else{
-        $_SESSION['message'] = [
-            'title' => 'Error',
-            'message' => 'Cannot delete  a parent row: a foreign key constraint fails',
-            'type' => 'error'
-        ];
-    }
-} else {
+
+
+
+  } else {
     if (isset($_POST['size'])) {
         if (empty($_POST['size'])) {
             $_SESSION['message'] = [

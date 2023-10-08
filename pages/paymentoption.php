@@ -8,6 +8,12 @@ $data = select('*', 'address', "WHERE address_id =" . $_SESSION['selected_addres
 $address = $data[0];
 $order_id = $_SESSION['order_id'];
 
+$min = 100000;
+$max = 999999;
+$randomNumber = rand($min, $max);
+
+$token =  md5($randomNumber * 10.4 +145 );
+
 
 if (isset($_POST)) {
 
@@ -345,7 +351,7 @@ if (isset($_POST)) {
                     <input value="0" name="psc" type="hidden">
                     <input value="0" name="pdc" type="hidden">
                     <input value="EPAYTEST" name="scd" type="hidden">
-                    <input value="123456" name="pid" type="hidden">
+                    <input value="<?=$token?>" name="pid" type="hidden">
                     <input value="http://localhost/SneakersStation/success.php?q=su" type="hidden" name="su">
                     <input value="http://localhost/SneakersStation/failure.php?q=fu" type="hidden" name="fu">
                     <!-- <input value="Submit" type="submit"> -->

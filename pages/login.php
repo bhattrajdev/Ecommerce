@@ -71,8 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $email = $_POST['email'];
         $password = md5($_POST['password']);
         $query = select('*', 'Users', "WHERE email='{$email}' AND password='{$password}'");
+
         if ($query != null) {
+            print_r($query);
             foreach ($query as $data) {
+
                 $is_verified = $data['is_verified'];
 
                 if ($is_verified == 1) {
@@ -80,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $email = $data['email'];
                     $_SESSION['name'] = $name;
                     $_SESSION['email'] = $email;
-                    $_SESSION['users_id'] = $data['users_id'];
+                    $_SESSION['users_id'] = $data['user_id'];
                     header('Location:index.php');
                 } else {
                     $msg = "Please! Validate yourself";

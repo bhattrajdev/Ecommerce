@@ -32,7 +32,7 @@
             <?php foreach ($data as $key => $item) { ?>
                 <tr>
                     <td><?= ++$key ?></td>
-                    <td><?= $item['name'] ?></td>
+                    <td><?= $item['email'] ?></td>
                     <td><?= $item['total'] ?></td>
                     <td><?= $item['order_date'] ?></td>
                     <td> <a href="viewOrder.php?id=<?= $item['order_id'] ?>"><button class="btn btn-primary"><i class="fa-solid fa-eye" style="color: #fff;"></i> View</button></a></td>

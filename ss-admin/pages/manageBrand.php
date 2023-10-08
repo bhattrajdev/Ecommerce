@@ -7,12 +7,14 @@ if (isset($_GET['id']) && isset($_GET['name']) && $_GET['type'] === 'delete') {
     $id = $_GET['id'];
     $data = $_GET['name'];
     // deleting a folder
-    $directoryPath = public_path('images') . '/' . $data;
-    if (is_dir($directoryPath)) {
-        rmdir($directoryPath);
-    }
-
+    // $directoryPath = public_path('images') . '/' . $data;
+    // if (is_dir($directoryPath)) {
+    //     rmdir($directoryPath);
+    // }
+    $dbcon->exec("SET FOREIGN_KEY_CHECKS = 0");
     delete('brand', 'brand_id', $id);
+    $dbcon->exec("SET FOREIGN_KEY_CHECKS = 1");
+
     $_SESSION['message'] = [
         'title' => 'Success',
         'message' => 'Brand deleted successfully',

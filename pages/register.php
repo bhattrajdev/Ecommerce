@@ -36,7 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $randomNumber = rand($min, $max);
 
         $checkData = select('*', 'users', "WHERE email = '$email'");
-        if ($checkData > 0) {
+        
+        if (!empty($checkData)) {
             $_SESSION['message'] = [
                 'title' => 'ERROR',
                 'message' => 'User already exists',
@@ -73,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
             phpmailer($email, $body,"Verification Code");
-            header('Location:register_validation.php');
+            header('Location:login.php');
         }
     }
 }

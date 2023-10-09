@@ -14,8 +14,8 @@ $output = select(
     orders.total,
     orders.order_date,
     orders.is_shipped,
-    orders.order_id',
-
+    orders.order_id,orders.is_paid,
+    orders.payment_method',
     'orders',
     "JOIN users ON orders.user_id = users.user_id
     JOIN address ON orders.address_id = address.address_id 
@@ -74,7 +74,7 @@ Thank you for choosing SneakerStation. We value your business and look forward t
 
 Best regards,<br>
 The SneakerStation Team";
-phpmailer($email, $message, "Order Delivered");
+        phpmailer($email, $message, "Order Delivered");
 
         $_SESSION['message'] = [
             'title' => 'Success',
@@ -112,7 +112,7 @@ We hope you enjoy your new sneakers! Thank you for shopping with us. Should you 
 
 Best regards,<br>
 The SneakerStation Team";
-phpmailer($email, $message, "Order Shipped");
+        phpmailer($email, $message, "Order Shipped");
         $_SESSION['message'] = [
             'title' => 'Success',
             'message' => 'Order marked as shipped successfully',
@@ -188,25 +188,45 @@ phpmailer($email, $message, "Order Shipped");
             </div>
         </div>
 
-
-        <!-- Orders Details Table -->
-        <div class="card">
-            <div class="card-header">
-                <h4>Orders</h4>
+        <?php if ($data['payment_method'] != null) { ?>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4>Payment</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 font-weight-bold">Payment Type:</div>
+                            <div class="col-md-8"><?= $data['payment_method'] ?></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 font-weight-bold">Paid:</div>
+                            <div class="col-md-8"><?= $data['is_paid'] == 0 ? 'Pending' : 'Done' ?></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <table class="table table-dark">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Quantity</th>
-                            <th>Size</th>
-                            <th>Color</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- <?php for ($i = 0; $i < count($product_name); $i++) { ?>
+        <?php } ?>
+    </div>
+
+    <!-- Orders Details Table -->
+    <div class="card">
+        <div class="card-header">
+            <h4>Orders</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Size</th>
+                        <th>Color</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <?php for ($i = 0; $i < count($product_name); $i++) { ?>
                         <tr>
                             <td><?= $i + 1 ?></td>
                             <td><?= $product_name[$i] ?></td>
@@ -215,29 +235,29 @@ phpmailer($email, $message, "Order Shipped");
                             <td><?= $product_color[$i] ?></td>
                         </tr>
                     <?php } ?> -->
-                        <?php foreach ($output as $key => $data) { ?>
-                            <tr>
-                                <td><?= ++$key ?></td>
-                                <td><?= $data['product_name'] ?></td>
-                                <td><?= $data['product_quantity'] ?></td>
-                                <td><?= $data['product_size'] ?></td>
-                                <td><?= $data['product_color'] ?></td>
-                            </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            </div>
+                    <?php foreach ($output as $key => $data) { ?>
+                        <tr>
+                            <td><?= ++$key ?></td>
+                            <td><?= $data['product_name'] ?></td>
+                            <td><?= $data['product_quantity'] ?></td>
+                            <td><?= $data['product_size'] ?></td>
+                            <td><?= $data['product_color'] ?></td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
         </div>
-        <!-- for accept and reject buttons  -->
-        <form action="" method="post">
-            <input type="hidden" name="order_id" value=<?=$data['order_id']?>>
-            <div class="d-flex justify-content-end my-4 ">
-
-                <?php if ($data['is_shipped'] == 0) { ?>
-                    <button class="btn btn-success mx-4" name="markasshipped"><i class="fa-solid fa-check" style="color: #fff;"></i> Mark As Shipped</button>
-                <?php } else { ?>
-                    <button class="btn btn-success mx-4" name="markasdelivered"><i class="fa-solid fa-check" style="color: #fff;"></i> Mark As Delivered</button>
-                <?php } ?>
-            </div>
-        </form>
     </div>
+    <!-- for accept and reject buttons  -->
+    <form action="" method="post">
+        <input type="hidden" name="order_id" value=<?= $data['order_id'] ?>>
+        <div class="d-flex justify-content-end my-4 ">
+
+            <?php if ($data['is_shipped'] == 0) { ?>
+                <button class="btn btn-success mx-4" name="markasshipped"><i class="fa-solid fa-check" style="color: #fff;"></i> Mark As Shipped</button>
+            <?php } else { ?>
+                <button class="btn btn-success mx-4" name="markasdelivered"><i class="fa-solid fa-check" style="color: #fff;"></i> Mark As Delivered</button>
+            <?php } ?>
+        </div>
+    </form>
+</div>

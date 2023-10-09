@@ -73,7 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $query = select('*', 'Users', "WHERE email='{$email}' AND password='{$password}'");
 
         if ($query != null) {
-            print_r($query);
             foreach ($query as $data) {
 
                 $is_verified = $data['is_verified'];

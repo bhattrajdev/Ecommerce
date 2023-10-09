@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
             phpmailer($email, $body,"Verification Code");
-            header('Location:login.php');
+            header('Location:register_validation.php');
         }
     }
 }

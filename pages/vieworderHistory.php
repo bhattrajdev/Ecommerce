@@ -17,7 +17,9 @@ $output = select(
     orders.order_date,
     orders.delivery_date,
     orders.payment_method,
-    orders.order_id',
+    orders.order_id,
+    orders.is_paid
+    ',
     'orders',
     "JOIN users ON orders.user_id = users.user_id
     JOIN address ON orders.address_id = address.address_id 
@@ -29,6 +31,7 @@ $output = select(
     WHERE orders.order_id = $order_id"
 );
 $data = $output[0];
+
 
 
 // Separating product name
@@ -327,15 +330,43 @@ if ($seller_id != null) {
                             <div class="col-md-4 font-weight-bold">Delivered On:</div>
                             <div class="col-md-8"><?= $data['delivery_date'] ?></div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4 font-weight-bold">Payment Type:</div>
-                            <div class="col-md-8"><?= $data['payment_method'] ?></div>
-                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     <?php } ?>
+
+
+
+
+    <?php if ($data['payment_method'] != null) { ?>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4>Payment</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 font-weight-bold">Payment Type:</div>
+                            <div class="col-md-8"><?= $data['payment_method'] ?></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 font-weight-bold">Paid:</div>
+                            <div class="col-md-8"><?= $data['is_paid'] == 0 ?'Pending':'Done' ?></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+
+
+
+  
+
     <?php if ($seller_id != null) { ?>
         <div class="row">
             <div class="col-md-6">

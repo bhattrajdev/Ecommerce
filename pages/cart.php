@@ -3,6 +3,8 @@ if (!isset($_SESSION['name']) && !isset($_SESSION['email']) && !isset($_SESSION[
     header('location: login.php');
     exit();
 } else {
+
+    
     if (isset($_POST['remove'])) {
         $id = $_POST['remove'];
         foreach ($_SESSION['cartdata'] as $index => $cartItem) {

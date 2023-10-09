@@ -69,7 +69,7 @@
                     </div>
                     <form action="searchResults.php">
                         <div class="burgersearch">
-                            <input type="search" id="search" placeholder="Search Here" />
+                            <input type="search" id="search" name="search" placeholder="Search Here" />
                         </div>
                     </form>
                     <li><a href="index.php">Home</a></li>

@@ -9,6 +9,7 @@ echo "<pre>";
 print_r($query);
 
 
+
 $response = $_GET['q'];
 
 if ($response == 'su') {
@@ -31,14 +32,25 @@ if ($response == 'su') {
     // strrpos()
 
     // if (strpos($response, "su")) {
+    echo "Success";
+    $data = [
+        'payment_method' => 'esewa',
+        'is_paid' => '1',
+        'order_date' => date("Y-m-d"),
+    ];
+    if (update('orders', $data, "order_id = $order_id")) {
         echo "Success";
-        $_SESSION['message'] = [
-            'title' => 'Success',
-            'message' => 'Payment successfull',
-            'type' => 'success'
-        ];
+    } else {
+        echo "failed";
+    }
 
-        header('Location:index.php');
-//     } else {
-//     }
+    $_SESSION['message'] = [
+        'title' => 'Success',
+        'message' => 'Order placed successfully and payment completed using esewa',
+        'type' => 'success'
+    ];
+
+    header('Location:index.php');
+    //     } else {
+    //     }
 }

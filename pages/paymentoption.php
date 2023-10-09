@@ -14,7 +14,6 @@ $randomNumber = rand($min, $max);
 
 $token =  md5($randomNumber * 10.4 +145 );
 
-
 if (isset($_POST)) {
 
     if (isset($_POST['cod'])) {

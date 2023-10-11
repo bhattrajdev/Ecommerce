@@ -28,7 +28,20 @@
         foreach ($users as $key => $a) {
             $userCount = ++$key;
         }
+
+
+        // getting Total  sales amount
+        $totalsales = 0;
+        $sales = select('*', 'orders', 'WHERE delivery_date is NOT NULL');
+        foreach ($sales as $key => $order) {
+            $totalsales += $order['total'];
+        }
         ?>
+
+
+
+
+
       <?php if ($orderCount > 0) { ?>
           <h5 class="my-4 alert alert-warning ">You have got <?= $orderCount ?> new orders <a href="newOrders" style="text-decoration: none;">View</a></h5>
       <?php } ?>
@@ -58,12 +71,12 @@
           </div>
 
           <div class="col-md-4">
-              <a href="#" class="a-disabled">
+              <a href="<?= url('ss-admin/oldOrders.php') ?>" class="a-disabled">
                   <div class="card dashboard-box">
                       <div class="icon mt-4  m-auto">
                           <i class="fa-solid fa-money-bill"></i> <span>Sales</span>
                       </div>
-                      <div class="number mt-3  m-auto">852</div>
+                      <div class="number mt-3  m-auto"><?= $totalsales ?></div>
                   </div>
               </a>
           </div>

@@ -39,9 +39,13 @@ To get started with SneakersStation, follow these steps:
 5. Start the frontend by navigating to the `pages/` folder on your web server.
 6. Access the backend by navigating to the `ss-admin/` folder.
 
-## Contributing
+## Screenshots
+![home](https://github.com/bhattrajdev/Ecommerce/assets/97286986/d1404c04-cb7e-4859-81d1-53b084f2612b)
 
-We welcome contributions to improve SneakersStation! Please fork this repository and submit pull requests.
+![login](https://github.com/bhattrajdev/Ecommerce/assets/97286986/f7171b71-834a-42d5-a612-cec38f5edec2)
+
+![pages](https://github.com/bhattrajdev/Ecommerce/assets/97286986/656fe314-929f-4ee9-adff-354d6d89ac34)
+
+![product detail](https://github.com/bhattrajdev/Ecommerce/assets/97286986/437d3236-c36b-42c3-8f11-934c3d40afef)
 
 
-Enjoy exploring the world of sneakers with SneakersStation!
